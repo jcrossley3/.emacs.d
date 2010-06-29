@@ -1,7 +1,7 @@
 
 (if (require 'color-theme nil t)
     (progn
-      (color-theme-initialize)
+      (if (fboundp 'color-theme-initialize) (color-theme-initialize))
       ;; (color-theme-jsc-dark)
       ;; (color-theme-dark-blue)
       ;; (color-theme-subtle-hacker)
