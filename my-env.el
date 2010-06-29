@@ -17,6 +17,9 @@
 (setenv "PATH" (concat (expand-file-name "~/local/maven/bin") ":/opt/local/bin:/opt/local/sbin:" 
 		       (getenv "PATH")))
 
+;; Use mdfind on MacOSX
+(if (string-equal system-type "darwin") (setq locate-command "mdfind"))
+
 ;;; The way previous input should be matched in a shell
 (defun my-previous-input-behavior ()
   (local-set-key "\M-p" 'comint-previous-matching-input-from-input))

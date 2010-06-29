@@ -26,7 +26,6 @@
  '(gnus-total-expirable-newsgroups ".")
  '(ido-mode (quote both) nil (ido))
  '(kill-whole-line t)
- '(locate-command "mdfind")
  '(nnmail-expiry-wait 14)
  '(ns-alternate-modifier (quote super))
  '(ns-command-modifier (quote meta))
