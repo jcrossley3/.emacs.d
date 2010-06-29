@@ -1,4 +1,7 @@
+;;; does anyone really use this?
+(tool-bar-mode -1)
 
+;;; ooh, colors!
 (if (require 'color-theme nil t)
     (progn
       (if (fboundp 'color-theme-initialize) (color-theme-initialize))

@@ -6,8 +6,8 @@
 (add-to-list 'load-path (concat my-config-dir "lib"))
 
 ;; keep customize settings in their own file
-(setq my-custom-file (concat my-config-dir "custom.el"))
-(load my-custom-file)
+(setq custom-file (concat my-config-dir "custom.el"))
+(load custom-file)
 
 ;; slurp in my various credentials
 (load ".auth")
