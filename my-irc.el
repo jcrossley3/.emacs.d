@@ -17,7 +17,7 @@
   "Shows a growl notification, when user's nick was mentioned."
   (unless (posix-string-match "^\\** *Users on #" message)
     (growl
-     (concat "ERC: name mentioned on: " (buffer-name (current-buffer)))
+     (concat (symbol-name match-type) " match: " (buffer-name (current-buffer)))
      message
      )))
 (add-hook 'erc-text-matched-hook 'growl-when-mentioned)
