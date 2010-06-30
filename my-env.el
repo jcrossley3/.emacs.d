@@ -1,6 +1,9 @@
 ;;; does anyone really use this?
 (tool-bar-mode -1)
 
+;;; a nice font perhaps?
+(set-frame-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" nil)
+
 ;;; ooh, colors!
 (if (require 'color-theme nil t)
     (progn
