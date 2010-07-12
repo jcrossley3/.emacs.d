@@ -29,7 +29,7 @@
 (add-hook 'comint-mode-hook 'my-previous-input-behavior)
 
 ;;; Convenient shortcuts
-(global-set-key (quote [f9]) (quote svn-status))
+(global-set-key (quote [f9]) (quote magit-status))
 (global-set-key (quote [f8]) (quote browse-url-at-point))
 (global-set-key (quote [f7]) (quote compile))
 (global-set-key (quote [f4]) (quote browse-kill-ring))

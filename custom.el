@@ -10,6 +10,7 @@
  '(backup-directory-alist (quote (("." . "~/.backups"))))
  '(blink-cursor-mode t)
  '(bookmark-save-flag 0)
+ '(compilation-scroll-output t)
  '(cursor-type (quote box) t)
  '(display-time-mode t)
  '(erc-autojoin-channels-alist (quote (("freenode.net" "#stormgrind" "#jboss-dev" "#torquebox") ("redhat.com" "#oddteam"))))
