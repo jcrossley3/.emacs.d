@@ -27,3 +27,22 @@
     (interactive (list (completing-read "Nick: " erc-channel-users)))
     (erc-cmd-QUERY nick)))
 
+;;; I prefer SPC/DEL to page UP/DOWN
+(defun at-erc-prompt ()
+  (save-excursion
+    (beginning-of-line)
+    (looking-at "ERC>")))
+(defun my-erc-space ()
+  (interactive)
+  (if (at-erc-prompt)
+      (self-insert-command 1)
+    (condition-case nil
+	(scroll-up)
+      (error (end-of-buffer)))))
+(defun my-erc-backspace ()
+  (interactive)
+  (if (at-erc-prompt)
+      (delete-backward-char 1)
+    (scroll-down)))
+(define-key erc-mode-map (kbd "SPC") 'my-erc-space)
+(define-key erc-mode-map (kbd "DEL") 'my-erc-backspace)

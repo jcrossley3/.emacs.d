@@ -14,9 +14,9 @@
  '(compilation-scroll-output t)
  '(cursor-type (quote box) t)
  '(display-time-mode t)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#stormgrind" "#jboss-dev" "#torquebox") ("redhat.com" "#oddteam"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#emacs" "#stormgrind" "#jboss-dev" "#torquebox") ("redhat.com" "#oddteam"))))
  '(erc-autojoin-mode t)
- '(erc-hide-list (quote ("KICK" "NICK" "JOIN" "PART" "QUIT" "MODE")))
+ '(erc-hide-list (quote ("KICK" "NICK" "PART" "QUIT" "MODE")))
  '(erc-mode-line-format "%s %a. %n on %t (%m,%l)")
  '(erc-modules (quote (autojoin button completion fill irccontrols keep-place list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
  '(erc-nick "jc3")
@@ -38,6 +38,7 @@
  '(smtpmail-smtp-server "smtp.corp.redhat.com")
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
  '(visual-line-mode nil t)
+ '(w3m-fill-column 100)
  '(x-select-enable-clipboard t))
 (custom-set-faces
   ;; custom-set-faces was added by Custom.

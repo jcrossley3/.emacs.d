@@ -18,3 +18,4 @@
 ;; 			    (local-set-key 'f4 'ri-ruby-show-args)
 ;; 			    ))
 
+(add-to-list 'auto-mode-alist '("\\.gem\\'" . tar-mode))
