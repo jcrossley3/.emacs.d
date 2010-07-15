@@ -14,6 +14,7 @@
       '(
         ("aquamacs"      "^\\(To\\|Cc\\):.*macosx-emacs")
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
+        ("android"       "^\\(To\\|Cc\\):.*android")
         ))
 
 ;;; Primary news server
