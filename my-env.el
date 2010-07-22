@@ -13,7 +13,7 @@
       ;; (color-theme-subtle-hacker)
       ;; (color-theme-ld-dark)
       ;; (color-theme-clarity)
-      (color-theme-hober)))
+      (color-theme-hober2)))
 
 ;; ensure necessary libs are available on the PATH because MacOS
 ;; doesn't make this intuitive or easy
