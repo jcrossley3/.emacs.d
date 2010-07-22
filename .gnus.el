@@ -2,7 +2,7 @@
 (setq user-mail-address "jcrossley@redhat.com"
       mail-host-address "redhat.com"
       user-full-name "Jim Crossley"
-      my-news-server "nntp.charter.net"
+      my-news-server "nntp.aioe.org"
       my-imap-server "mail.corp.redhat.com"
       my-smtp-server "smtp.corp.redhat.com"
       )
