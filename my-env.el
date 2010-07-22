@@ -8,11 +8,7 @@
 (if (require 'color-theme nil t)
     (progn
       (if (fboundp 'color-theme-initialize) (color-theme-initialize))
-      ;; (color-theme-jsc-dark)
-      ;; (color-theme-dark-blue)
-      ;; (color-theme-subtle-hacker)
-      ;; (color-theme-ld-dark)
-      ;; (color-theme-clarity)
+      (require 'color-theme-hober2)
       (color-theme-hober2)))
 
 ;; ensure necessary libs are available on the PATH because MacOS
