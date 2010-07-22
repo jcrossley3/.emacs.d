@@ -10,7 +10,7 @@
 ;;         Alberto Garcia  <agarcia@igalia.com>
 ;; Created: Sep 4, 2007
 ;; Version: HEAD
-;; Identity: $Id: 2f1694f0bda3fd591227e26e0eb376b137647c34 $
+;; Identity: $Id: 0b2b28795b9cca12ec743d50c644fac7ca5132cd $
 ;; Keywords: twitter web
 ;; URL: http://twmode.sf.net/
 
@@ -65,7 +65,7 @@
 (require 'url)
 
 (defconst twittering-mode-version "HEAD")
-(defconst twittering-mode-identity "$Id: 2f1694f0bda3fd591227e26e0eb376b137647c34 $")
+(defconst twittering-mode-identity "$Id: 0b2b28795b9cca12ec743d50c644fac7ca5132cd $")
 (defvar twittering-api-host "api.twitter.com")
 (defvar twittering-api-search-host "search.twitter.com")
 (defvar twittering-web-host "twitter.com")
@@ -291,6 +291,8 @@ when it conflict with your input method (such as AquaSKK, etc.)")
   "Use SSL connection if this variable is non-nil.
 
 SSL connections use 'curl' command as a backend.")
+(defvar twittering-allow-insecure-server-cert nil
+  "*If non-nil, twittering-mode allows insecure server certificates.")
 
 (defvar twittering-curl-program nil
   "Cache a result of `twittering-find-curl-program'.
@@ -385,6 +387,9 @@ pop-up buffer.")
 		    ("rpp" . ,number-str)))
 		 ((eq spec-type 'list)
 		  `(("per_page" . ,number-str)))
+		 ((memq spec-type '(user friends mentions public))
+		  `(("count" . ,number-str)
+		    ("include_rts" . "true")))
 		 (t
 		  `(("count" . ,number-str))))))
 	   (format (if (eq spec-type 'search)
@@ -1105,8 +1110,8 @@ function."
 	  `(("Authorization" . ,auth-str)
 	    ("Accept-Charset" . "us-ascii")
 	    ("Content-Type" . "application/x-www-form-urlencoded")
-	    ("Content-Length" . ,(format "%d" (length post-body))))
-	  (url-request-data post-body))
+	    ("Content-Length" . ,(format "%d" (length post-body)))))
+	 (url-request-data post-body)
 	 (coding-system-for-read 'utf-8-unix))
     (lexical-let ((result 'queried))
       (let ((buffer
@@ -1131,11 +1136,25 @@ function."
 
 (defun twittering-oauth-get-token-alist-native (url auth-str post-body)
   (let* ((method "POST")
-	 (url-parts (url-generic-parse-url url))
-	 (scheme (and url-parts (aref url-parts 0)))
-	 (host (and url-parts (aref url-parts 3)))
-	 (port (and url-parts (aref url-parts 4)))
-	 (path (and url-parts (aref url-parts 5)))
+	 (parts-alist
+	  (let ((parsed-url (url-generic-parse-url url)))
+	    (cond
+	     ((and (fboundp 'url-p) (url-p parsed-url))
+	      `((scheme . ,(url-type parsed-url))
+		(host . ,(url-host parsed-url))
+		(port . ,(url-portspec parsed-url))
+		(path . ,(url-filename parsed-url))))
+	     ((vectorp parsed-url)
+	      `((scheme . ,(aref parsed-url 0))
+		(host . ,(aref parsed-url 3))
+		(port . ,(aref parsed-url 4))
+		(path . ,(aref parsed-url 5))))
+	     (t
+	      nil))))
+	 (scheme (cdr (assq 'scheme parts-alist)))
+	 (host (cdr (assq 'host parts-alist)))
+	 (port (cdr (assq 'port parts-alist)))
+	 (path (cdr (assq 'path parts-alist)))
 	 (proxy-info
 	  (when twittering-proxy-use
 	    (twittering-proxy-info scheme)))
@@ -1160,6 +1179,7 @@ function."
 		  (or post-body ""))))
     (with-temp-buffer
       (let* ((coding-system-for-read 'utf-8-unix)
+	     (tls-program twittering-tls-program)
 	     (proc
 	      (funcall (if twittering-oauth-use-ssl
 			   'open-tls-stream
@@ -1174,11 +1194,19 @@ function."
 	     (lambda (&rest args)
 	       (let* ((proc (car args))
 		      (buffer (process-buffer proc))
-		      (status (process-status proc)))
+		      (status (process-status proc))
+		      (exit-status (process-exit-status proc)))
+		 (debug-printf "proc=%s stat=%s exit-status=%s"
+			       proc status exit-status)
 		 (cond
 		  ((not (memq status '(nil closed exit failed signal)))
 		   ;; continue
 		   )
+		  ((and (process-command proc)
+			(not (= 0 exit-status)))
+		   (message "%s exited abnormally (exit-status=%s)."
+			    (car (process-command proc)) exit-status)
+		   (setq result nil))
 		  (buffer
 		   (when twittering-debug-mode
 		     (with-current-buffer (twittering-debug-buffer)
@@ -1193,11 +1221,16 @@ function."
 	    result))))))
 
 (defun twittering-oauth-get-token-alist-curl (url auth-str post-body)
-  (let* ((url-parts (url-generic-parse-url url))
-	 (scheme (and url-parts (aref url-parts 0)))
-	 (host (and url-parts (aref url-parts 3)))
-	 (port (and url-parts (aref url-parts 4)))
-	 (path (and url-parts (aref url-parts 5)))
+  (let* ((parts-alist
+	  (let ((parsed-url (url-generic-parse-url url)))
+	    (cond
+	     ((and (fboundp 'url-p) (url-p parsed-url))
+	      `((scheme . ,(url-type parsed-url))))
+	     ((vectorp parsed-url)
+	      `((scheme . ,(aref parsed-url 0))))
+	     (t
+	      nil))))
+	 (scheme (cdr (assq 'scheme parts-alist)))
 	 (headers
 	  `(("Authorization" . ,auth-str)
 	    ("Accept-Charset" . "us-ascii")
@@ -1217,6 +1250,9 @@ function."
 		      headers)
 	    ,@(when twittering-oauth-use-ssl
 		`("--cacert" ,cacert-filename))
+	    ,@(when (and twittering-oauth-use-ssl
+			 twittering-allow-insecure-server-cert)
+		`("--insecure"))
 	    ,@(when twittering-proxy-use
 		(let* ((host (twittering-proxy-info scheme 'server))
 		       (port (twittering-proxy-info scheme 'port)))
@@ -1260,11 +1296,19 @@ function."
 	     (lambda (&rest args)
 	       (let* ((proc (car args))
 		      (buffer (process-buffer proc))
-		      (status (process-status proc)))
+		      (status (process-status proc))
+		      (exit-status (process-exit-status proc)))
+		 (debug-printf "proc=%s stat=%s exit-status=%s"
+			       proc status exit-status)
 		 (cond
 		  ((not (memq status '(nil closed exit failed signal)))
 		   ;; continue
 		   )
+		  ((and (process-command proc)
+			(not (= 0 exit-status)))
+		   (message "%s exited abnormally (exit-status=%s)."
+			    (car (process-command proc)) exit-status)
+		   (setq result nil))
 		  (buffer
 		   (when twittering-debug-mode
 		     (with-current-buffer (twittering-debug-buffer)
@@ -1570,6 +1614,10 @@ is the display property for the icon.")
 is non-nil. If this variable is non-nil, icon images are converted by
 invoking \"convert\". Otherwise, cropped images are displayed.")
 
+(defvar twittering-use-profile-image-api nil
+  "*Whether to use `profile_image' API for retrieving scaled icon images.
+NOTE: This API is rate limited.")
+
 (defconst twittering-error-icon-data-pair
   '(xpm . "/* XPM */
 static char * yellow3_xpm[] = {
@@ -1630,11 +1678,13 @@ return nil."
   "Return a pair of image type and image data.
 IMAGE-DATA is converted by `convert' if the image type of IMAGE-DATA is not
 available and `twittering-use-convert' is non-nil."
-  (let* ((image-type (image-type-from-data image-data))
+  (let* ((image-type (and image-data (image-type-from-data image-data)))
 	 (image-pair `(,image-type . ,image-data))
 	 (converted-size
 	  `(,twittering-convert-fix-size . ,twittering-convert-fix-size)))
     (cond
+     ((null image-data)
+      twittering-error-icon-data-pair)
      ((and (image-type-available-p image-type)
 	   (or (not (integerp twittering-convert-fix-size))
 	       (equal (image-size (create-image image-data image-type t) t)
@@ -1713,7 +1763,12 @@ image are displayed."
 				'(need-to-be-updated nil)
 				icon-string)
 	icon-string))
-     (image-data
+     ((and (integerp image-data)
+	   (<= twittering-url-request-retry-limit image-data))
+      ;; Try to retrieve the image no longer.
+      (twittering-register-image-data image-url nil)
+      (twittering-make-icon-string beg end image-url))
+     ((and image-data (not (integerp image-data)))
       (twittering-register-image-data image-url image-data)
       (twittering-make-icon-string beg end image-url))
      (t
@@ -1960,12 +2015,41 @@ BEG and END mean a region that had been modified."
   ;; file "unicode(.el)" (which came from Mule-UCS), hence it breaks
   ;; `ucs-to-char' under non Mule-UCS environment. The problem is
   ;; fixed in navi2ch dated 2010-01-16 or later, but not released yet.
-  (if (and (featurep 'unicode) (functionp 'ucs-to-char))
-      (ucs-to-char num)
-    ;; Emacs21 have a partial support for UTF-8 text, so it can decode
-    ;; only parts of a text with Japanese.
-    (or (decode-char 'ucs num)
-	??)))
+  (or (if (and (featurep 'unicode) (functionp 'ucs-to-char))
+	  (ucs-to-char num)
+	;; Emacs21 have a partial support for UTF-8 text, so it can decode
+	;; only parts of a text with Japanese.
+	(decode-char 'ucs num))
+      twittering-unicode-replacement-char))
+
+(defvar twittering-unicode-replacement-char
+  (let ((twittering-unicode-replacement-char ??)
+	(code-point #xFFFD))
+    ;; "Unicode Character 'REPLACEMENT CHARACTER' (U+FFFD)"
+    (twittering-ucs-to-char code-point))
+  "*Replacement character used when `ucs-to-char' or `decode-char' return
+nil.")
+
+(defadvice decode-char (after twittering-add-fail-over-to-decode-char)
+  (when (null ad-return-value)
+    (setq ad-return-value twittering-unicode-replacement-char)))
+
+(defun twittering-xml-parse-region (&rest args)
+  "Wrapped `xml-parse-region' in order to avoid decoding errors.
+After activating the advice `twittering-add-fail-over-to-decode-char',
+`xml-parse-region' is called. This prevents `xml-parse-region' from
+exiting abnormally by decoding unknown numeric character reference."
+  (let ((activated (ad-is-active 'decode-char)))
+    (ad-enable-advice
+     'decode-char 'after 'twittering-add-fail-over-to-decode-char)
+    (ad-activate 'decode-char)
+    (unwind-protect
+	(apply 'xml-parse-region args)
+      (ad-disable-advice 'decode-char 'after
+			 'twittering-add-fail-over-to-decode-char)
+      (if activated
+	  (ad-activate 'decode-char)
+	(ad-deactivate 'decode-char)))))
 
 (defun twittering-remove-duplicates (list)
   "Return a copy of LIST with all duplicate elements removed.
@@ -3195,6 +3279,7 @@ authorized -- The account has been authorized.")
        (t
 	(message "Authorization via OAuth failed. Type M-x twit to retry.")))))
    ((eq twittering-auth-method 'xauth)
+    (twittering-prepare-account-info)
     (let ((token-alist
 	   (twittering-xauth-get-access-token
 	    twittering-oauth-access-token-url
@@ -3218,8 +3303,10 @@ authorized -- The account has been authorized.")
 	  (twittering-save-private-info-with-guide))
 	(twittering-start))
        (t
+	(setq twittering-username nil)
 	(message "Authorization via xAuth failed. Type M-x twit to retry.")))))
    ((eq twittering-auth-method 'basic)
+    (twittering-prepare-account-info)
     (setq twittering-account-authorization 'queried)
     (let ((proc
 	   (twittering-call-api
@@ -3240,7 +3327,10 @@ authorized -- The account has been authorized.")
 	  (setq twittering-account-authorization nil)
 	  (message "Authorization failed. Type M-x twit to retry.")
 	  (setq twittering-username nil)
-	  (setq twittering-password nil))))))))
+	  (setq twittering-password nil))))))
+   (t
+    (message "%s is invalid as an authorization method."
+	     twittering-auth-method))))
 
 (defun twittering-http-get-verify-credentials-sentinel (header-info proc noninteractive &optional suc-msg)
   (let ((status-line (cdr (assq 'status-line header-info)))
@@ -3971,6 +4061,9 @@ Z70Br83gcfxaz2TE4JaY0KNA4gGK7ycH8WUBikQtBmV1UsCGECAhX2xrD2yuCRyv
 		      headers)
 	    ,@(when twittering-use-ssl
 		`("--cacert" ,cacert-filename))
+	    ,@(when (and twittering-use-ssl
+			 twittering-allow-insecure-server-cert)
+		`("--insecure"))
 	    ,@(when twittering-proxy-use
 		(let* ((scheme (funcall request :schema))
 		       (host (twittering-proxy-info scheme 'server))
@@ -4029,7 +4122,21 @@ Z70Br83gcfxaz2TE4JaY0KNA4gGK7ycH8WUBikQtBmV1UsCGECAhX2xrD2yuCRyv
 				 (when (executable-find (match-string 1 cmd))
 				   cmd)))
 			     tls-program))))
-	(setq twittering-tls-program programs)))
+	(setq twittering-tls-program
+	      (if twittering-allow-insecure-server-cert
+		  (mapcar
+		   (lambda (str)
+		     (cond
+		      ((string-match "^\\([^ ]*/\\)?openssl s_client " str)
+		       (concat (match-string 0 str) "-verify 0 "
+			       (substring str (match-end 0))))
+		      ((string-match "^\\([^ ]*/\\)?gnutls-cli " str)
+		       (concat (match-string 0 str) "--insecure "
+			       (substring str (match-end 0))))
+		      (t
+		       str)))
+		   programs)
+		programs))))
     (not (null twittering-tls-program))))
 
 ;; TODO: proxy
@@ -4184,8 +4291,8 @@ Available keywords:
 
 (defun twittering-get-error-message (buffer)
   (if buffer
-      (let ((xmltree (twittering-get-response-body buffer
-						   'xml-parse-region)))
+      (let ((xmltree (twittering-get-response-body
+		      buffer 'twittering-xml-parse-region)))
 	(car (cddr (assq 'error (or (assq 'errors xmltree)
 				    (assq 'hash xmltree))))))
     nil))
@@ -4249,9 +4356,10 @@ QUERY-PARAMETERS is a list of cons pair of name and value such as
        (cadr encoded-time))))
 
 (defun twittering-http-default-sentinel (func noninteractive proc stat &optional suc-msg)
-  (debug-printf "http-default-sentinel: proc=%s stat=%s" proc stat)
+  (debug-printf "http-default-sentinel: proc=%s stat=%s exit-status=%s" proc stat (process-exit-status proc))
   (let ((temp-buffer (process-buffer proc))
 	(status (process-status proc))
+	(exit-status (process-exit-status proc))
 	(mes nil))
     (when (and twittering-proxy-use twittering-use-ssl
 	       (buffer-live-p temp-buffer))
@@ -4281,18 +4389,24 @@ QUERY-PARAMETERS is a list of cons pair of name and value such as
       t)
      ((memq status '(exit signal closed failed))
       (unwind-protect
-	  (let* ((header (twittering-get-response-header temp-buffer))
-		 (header-info
-		  (and header (twittering-update-server-info header))))
-	    (setq mes
-		  (cond
-		   ((null header-info)
-		    "Failure: Bad http response.")
-		   ((and func (fboundp func))
-		    (with-current-buffer temp-buffer
-		      (funcall func header-info proc noninteractive suc-msg)))
-		   (t
-		    nil))))
+	  (setq mes
+		(if (and (process-command proc)
+			 (not (= 0 exit-status)))
+		    ;; The process exited abnormally.
+		    (format "%s exited abnormally (exit-status=%s)."
+			    (car (process-command proc)) exit-status)
+		  (let* ((header (twittering-get-response-header temp-buffer))
+			 (header-info
+			  (and header (twittering-update-server-info header))))
+		    (cond
+		     ((null header-info)
+		      "Failure: Bad http response.")
+		     ((and func (fboundp func))
+		      (with-current-buffer temp-buffer
+			(funcall func header-info proc noninteractive
+				 suc-msg)))
+		     (t
+		      nil)))))
 	;; unwindforms
 	(twittering-release-process proc)
 	(when (and (not twittering-debug-mode) (buffer-live-p temp-buffer))
@@ -4341,8 +4455,9 @@ QUERY-PARAMETERS is a list of cons pair of name and value such as
     (case-string
      status-code
      (("200")
-      (let ((xmltree (twittering-get-response-body (process-buffer proc)
-						   'xml-parse-region)))
+      (let ((xmltree
+	     (twittering-get-response-body
+	      (process-buffer proc) 'twittering-xml-parse-region)))
 	(when xmltree
 	  (setq indexes
 		(mapcar
@@ -4441,7 +4556,8 @@ Return nil when parse failed.
 
 SPEC is timeline-spec which was used to retrieve BUFFER.
 BUFFER may be a buffer or the name of an existing buffer."
-  (let ((body (twittering-get-response-body buffer 'xml-parse-region)))
+  (let ((body
+	 (twittering-get-response-body buffer 'twittering-xml-parse-region)))
     (when body
       (if (eq 'search (car spec))
 	  (twittering-atom-xmltree-to-status body)
@@ -4819,7 +4935,9 @@ If INTERRUPT is non-nil, the iteration is stopped if FUNC returns nil."
 
 (defun twittering-redisplay-status-on-buffer ()
   (mapc (lambda (buffer)
-	  (unless (with-current-buffer buffer mark-active)
+	  (unless (with-current-buffer buffer
+		    (or (and (fboundp 'use-region-p) (use-region-p))
+			(and transient-mark-mode mark-active)))
 	    (twittering-redisplay-status-on-each-buffer buffer)))
 	(twittering-get-buffer-list)))
 
@@ -5168,7 +5286,21 @@ following symbols;
     ("f" . (cdr (assq 'source ,status-sym)))
     ("i" .
      (when (and twittering-icon-mode window-system)
-       (let* ((url (cdr (assq 'user-profile-image-url ,status-sym))))
+       (let ((url
+	      (cond
+	       ((and twittering-use-profile-image-api
+		     (or (null twittering-convert-fix-size)
+			 (member twittering-convert-fix-size '(48 73))))
+		(let ((user (cdr (assq 'user-screen-name ,status-sym)))
+		      (size
+		       (if (or (null twittering-convert-fix-size)
+			       (= 48 twittering-convert-fix-size))
+			   "normal"
+			 "bigger")))
+		  (format "http://%s/1/users/profile_image/%s.xml?size=%s"
+			  twittering-api-host user size)))
+	       (t
+		(cdr (assq 'user-profile-image-url ,status-sym))))))
 	 (twittering-make-icon-string nil nil url))))
     ("j" . (cdr (assq 'user-id ,status-sym)))
     ("L" .
@@ -5933,16 +6065,12 @@ managed by `twittering-mode'."
   (interactive)
   (when (twittering-lookup-http-start-function)
     (twittering-initialize-global-variables-if-necessary)
-    (when (or (eq twittering-auth-method 'basic)
-	      (and (eq twittering-auth-method 'xauth)
-		   (not (twittering-account-authorized-p))))
-      (twittering-prepare-account-info))
+    (twittering-verify-credentials)
     (let ((timeline-spec
 	   (or timeline-spec
 	       (twittering-read-timeline-spec-with-completion
 		"timeline: " initial t))))
       (when timeline-spec
-	(twittering-verify-credentials)
 	(switch-to-buffer (twittering-get-managed-buffer timeline-spec))))))
 
 (defun twittering-other-user-timeline ()
