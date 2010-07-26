@@ -44,3 +44,7 @@
 (setq calendar-latitude 34.0)
 (setq calendar-longitude -84.4)
 (setq calendar-location-name "Roswell, GA")
+
+;;; Maximize window
+(require 'maxframe)
+(add-hook 'window-setup-hook 'maximize-frame t)
