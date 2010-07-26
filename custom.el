@@ -19,7 +19,7 @@
  '(erc-hide-list (quote ("KICK" "NICK" "QUIT" "MODE")))
  '(erc-interpret-mirc-color t)
  '(erc-mode-line-format "%s %a. %n on %t (%m,%l)")
- '(erc-modules (quote (autojoin button completion fill irccontrols keep-place list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track)))
+ '(erc-modules (quote (autojoin button completion fill irccontrols keep-place list log match menu move-to-prompt netsplit networks noncommands readonly ring stamp track highlight-nicknames)))
  '(erc-nick "jc3")
  '(erc-pal-highlight-type (quote all))
  '(erc-pals (quote ("bobmcw" "mgoldmann" "bbrowning")))

@@ -1,6 +1,7 @@
 
 (require 'erc)
 (require 'todochiku)
+(require 'erc-highlight-nicknames)
 
 (defun connect-redhat ()
   (interactive)
@@ -27,6 +28,8 @@
     (interactive (list (completing-read "Nick: " erc-channel-users)))
     (erc-cmd-QUERY nick)))
 
+(define-key erc-mode-map (kbd "C-c l") (lambda () (interactive) (erc-cmd-LIST)))
+
 ;;; I prefer SPC/DEL to page UP/DOWN
 (defun at-erc-prompt ()
   (save-excursion
@@ -46,3 +49,6 @@
     (scroll-down)))
 (define-key erc-mode-map (kbd "SPC") 'my-erc-space)
 (define-key erc-mode-map (kbd "DEL") 'my-erc-backspace)
+
+;; (add-to-list 'load-path (concat my-config-dir "lib/erc-5.3-extras"))
+;; (require 'erc-nicklist)
