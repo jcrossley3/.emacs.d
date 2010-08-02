@@ -1,8 +1,12 @@
 ;;; does anyone really use this?
 (tool-bar-mode -1)
 
-;;; a nice font perhaps?
-(set-frame-font "-unknown-DejaVu Sans Mono-normal-normal-normal-*-*-*-*-*-m-0-iso10646-1" nil)
+;;; Maximize window
+(require 'maxframe)
+(add-hook 'window-setup-hook 'maximize-frame t)
+
+;;; Preferred default font height (renders smaller on OSX)
+(set-face-attribute 'default (not 'only-this-frame) :height 150)
 
 ;;; ooh, colors!
 (if (require 'color-theme nil t)
@@ -11,10 +15,18 @@
       (require 'color-theme-hober2)
       (color-theme-hober2)))
 
-;; ensure necessary libs are available on the PATH because MacOS
-;; doesn't make this intuitive or easy
-(setenv "PATH" (concat (expand-file-name "~/local/maven/bin") ":/opt/local/bin:/opt/local/sbin:" 
-		       (getenv "PATH")))
+;; Setup PATH 
+(setenv "PATH" (shell-command-to-string "source ~/.bashrc; echo -n $PATH"))
+;; Update exec-path with the contents of $PATH
+(loop for path in (split-string (getenv "PATH") ":") do 
+      (add-to-list 'exec-path path))
+;; Grab other environment variables
+(loop for var in (split-string (shell-command-to-string "source ~/.bashrc; env")) do
+      (let* ((pair (split-string var "="))
+	     (key (car pair))
+	     (value (cadr pair)))
+	(unless (getenv key)
+	  (setenv key value))))
 
 ;; Use mdfind on MacOSX
 (if (string-equal system-type "darwin") (setq locate-command "mdfind"))
@@ -25,16 +37,13 @@
 (add-hook 'comint-mode-hook 'my-previous-input-behavior)
 
 ;;; Convenient shortcuts
-(global-set-key (quote [f9]) (quote magit-status))
-(global-set-key (quote [f8]) (quote browse-url-at-point))
-(global-set-key (quote [f7]) (quote compile))
-(global-set-key (quote [f4]) (quote browse-kill-ring))
-(global-set-key (quote [f3]) (quote grep-find))
-
-;;; Map goto-line to M-g
+(global-set-key (kbd "C-c m") 'magit-status)
+(global-set-key (kbd "C-c b") 'browse-url-at-point)
+(global-set-key (kbd "C-c c") 'mvn)
+(global-set-key (kbd "C-c k") 'browse-kill-ring)
+(global-set-key (kbd "C-c g") 'grep-find)
+(global-set-key (kbd "C-c l") 'org-store-link)
 ;(global-set-key "\M-g" 'goto-line)
-;;; Make <home> be C-a without the whitespace
-(global-set-key [(home)] 'back-to-indentation)
 
 ;;; smarter other-window
 (require 'windmove)
@@ -45,6 +54,6 @@
 (setq calendar-longitude -84.4)
 (setq calendar-location-name "Roswell, GA")
 
-;;; Maximize window
-(require 'maxframe)
-(add-hook 'window-setup-hook 'maximize-frame t)
+;;; Ignore case when completing selection input
+(setq completion-ignore-case t)
+
