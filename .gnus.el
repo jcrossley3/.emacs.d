@@ -2,7 +2,7 @@
 (setq user-mail-address "jcrossley@redhat.com"
       mail-host-address "redhat.com"
       user-full-name "Jim Crossley"
-      my-news-server "nntp.aioe.org"
+      my-news-server "news.gmane.org"
       my-imap-server "mail.corp.redhat.com"
       my-smtp-server "smtp.corp.redhat.com"
       )
@@ -50,3 +50,13 @@
 (setq gnus-total-expirable-newsgroups ".")
 (setq nnmail-expiry-wait 14)
 
+;;; Look up email addresses in LDAP
+(eval-after-load "message"
+  '(define-key message-mode-map (kbd "TAB") 'eudc-expand-inline))
+(setq eudc-ldap-attributes-translation-alist '((lastname . sn)
+					       (firstname . givenname)
+					       (email . mail)
+					       (phone . telephonenumber)
+					       (nickname . rhatknownas)))
+(setq eudc-inline-query-format '((nickname) (firstname) (lastname) (firstname lastname)))
+(setq eudc-inline-expansion-format '("%s <%s>" cn email))

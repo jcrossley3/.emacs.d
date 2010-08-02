@@ -30,6 +30,8 @@
  '(gnus-total-expirable-newsgroups ".")
  '(ido-mode (quote both) nil (ido))
  '(kill-whole-line t)
+ '(ldap-host-parameters-alist (quote (("ldap.corp.redhat.com" base "ou=users,dc=redhat,dc=com" scope subtree deref always))))
+ '(ldap-ldapsearch-args (quote ("-LLL" "-tt" "-x")))
  '(nnmail-expiry-wait 14)
  '(ns-alternate-modifier (quote super))
  '(ns-command-modifier (quote meta))
