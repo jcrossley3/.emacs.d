@@ -20,4 +20,5 @@
 (load "my-env")
 (load "my-twitter")
 (load "my-ruby")
+(load "my-java")
 (load "my-irc")
