@@ -38,10 +38,12 @@
 (defun my-erc-space ()
   (interactive)
   (if (at-erc-prompt)
-      (self-insert-command 1)
-    (condition-case nil
-	(scroll-up)
-      (error (end-of-buffer)))))
+      (if (looking-at "ERC>") (end-of-line) (self-insert-command 1))
+	(progn
+	  (condition-case nil
+		  (scroll-up)
+		(error (end-of-buffer)))
+	  (recenter))))
 (defun my-erc-backspace ()
   (interactive)
   (if (at-erc-prompt)
@@ -50,5 +52,12 @@
 (define-key erc-mode-map (kbd "SPC") 'my-erc-space)
 (define-key erc-mode-map (kbd "DEL") 'my-erc-backspace)
 
-;; (add-to-list 'load-path (concat my-config-dir "lib/erc-5.3-extras"))
-;; (require 'erc-nicklist)
+(defun my-channel-keywords () 
+  (make-local-variable 'erc-keywords)
+  (let ((buf (buffer-name)))
+    (cond ((string-match "^#jboss" buf) 
+	   (setq erc-keywords '("git" "torquebox")))
+	  ((string-match "^#emacs" buf) 
+	   (setq erc-keywords '("eudc" "emms" "gnus")))
+	  (nil))))
+(add-hook 'erc-join-hook 'my-channel-keywords)

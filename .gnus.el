@@ -50,6 +50,9 @@
 (setq gnus-total-expirable-newsgroups ".")
 (setq nnmail-expiry-wait 14)
 
+;;; Prevent gnus from putting this in my custom-file
+(setq canlock-password my-canlock-password)
+
 ;;; Look up email addresses in LDAP
 (eval-after-load "message"
   '(define-key message-mode-map (kbd "TAB") 'eudc-expand-inline))
@@ -60,3 +63,11 @@
 					       (nickname . rhatknownas)))
 (setq eudc-inline-query-format '((nickname) (firstname) (lastname) (firstname lastname)))
 (setq eudc-inline-expansion-format '("%s <%s>" cn email))
+
+;;; Posting styles
+;; (setq gnus-posting-styles
+;;       '((".*"
+;;          (name "Jim Crossley"))
+;;         ((header "Subject" "testing")
+;;          (From "Jim Crossley <jim@crossleys.org>"))))
+
