@@ -22,3 +22,4 @@
 (load "my-ruby")
 (load "my-java")
 (load "my-irc")
+(load "my-nxml")
