@@ -40,7 +40,7 @@
 (global-set-key (kbd "C-c b") 'browse-url-at-point)
 (global-set-key (kbd "C-c c") 'mvn)
 (global-set-key (kbd "C-c k") 'browse-kill-ring)
-(global-set-key (kbd "C-c g") 'grep-find)
+(global-set-key (kbd "C-c g") 'rgrep)
 (global-set-key (kbd "C-c l") 'org-store-link)
 ;(global-set-key "\M-g" 'goto-line)
 
@@ -56,3 +56,5 @@
 ;;; Ignore case when completing selection input
 (setq completion-ignore-case t)
 
+;;; Really need to use el-get or some such
+(require 'magit)

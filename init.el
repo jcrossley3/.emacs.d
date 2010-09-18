@@ -23,3 +23,4 @@
 (load "my-java")
 (load "my-irc")
 (load "my-nxml")
+(put 'narrow-to-region 'disabled nil)

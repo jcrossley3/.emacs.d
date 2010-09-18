@@ -42,8 +42,8 @@
 	(progn
 	  (condition-case nil
 		  (scroll-up)
-		(error (end-of-buffer)))
-	  (recenter))))
+		(error (end-of-buffer)
+               (recenter))))))
 (defun my-erc-backspace ()
   (interactive)
   (if (at-erc-prompt)
