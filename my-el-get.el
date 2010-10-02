@@ -9,6 +9,8 @@
         package
         todochiku
         erc-highlight-nicknames
+        (:name rinari
+               :compile ("\.el$"))
         (:name color-theme-hober2
                :type http
                :features color-theme-hober2
