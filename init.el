@@ -12,15 +12,11 @@
 ;; slurp in my various credentials
 (load ".auth")
 
-;; elpa
-(require 'package)
-(package-initialize)
-
 ;; my stuff
+(load "my-el-get")
 (load "my-env")
 (load "my-twitter")
 (load "my-ruby")
 (load "my-java")
 (load "my-irc")
 (load "my-nxml")
-(put 'narrow-to-region 'disabled nil)

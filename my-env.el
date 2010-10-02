@@ -1,10 +1,6 @@
 ;;; does anyone really use this?
 (tool-bar-mode -1)
 
-;;; Maximize window
-(require 'maxframe)
-(add-hook 'window-setup-hook 'maximize-frame t)
-
 ;;; Preferred default font height (renders smaller on OSX)
 (set-face-attribute 'default (not 'only-this-frame) :height 150)
 
@@ -12,7 +8,6 @@
 (if (require 'color-theme nil t)
     (progn
       (if (fboundp 'color-theme-initialize) (color-theme-initialize))
-      (require 'color-theme-hober2)
       (color-theme-hober2)))
 
 ;; Setup PATH 
@@ -56,5 +51,3 @@
 ;;; Ignore case when completing selection input
 (setq completion-ignore-case t)
 
-;;; Really need to use el-get or some such
-(require 'magit)

@@ -1,7 +1,5 @@
 
 (require 'erc)
-(require 'todochiku)
-(require 'erc-highlight-nicknames)
 
 (defun connect-redhat ()
   (interactive)
