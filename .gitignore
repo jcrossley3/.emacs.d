@@ -3,3 +3,4 @@ semanticdb/
 auto-save-list/
 /.auth.el
 /tramp
+el-get/
