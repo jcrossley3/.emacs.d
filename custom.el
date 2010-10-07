@@ -12,8 +12,6 @@
  '(backup-directory-alist (quote (("." . "~/.backups"))))
  '(blink-cursor-mode t)
  '(bookmark-save-flag 0)
- '(browse-url-browser-function (quote browse-url-generic))
- '(browse-url-generic-program "/usr/bin/conkeror")
  '(compilation-scroll-output t)
  '(cursor-type (quote box) t)
  '(delete-selection-mode t)

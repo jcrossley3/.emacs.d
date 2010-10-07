@@ -1,16 +1,18 @@
 ;; el-get
 (setq el-get-sources
       '(el-get
-        magit
-        bbdb
-        emacs-w3m
+        (:name magit
+               :build/darwin ("PATH=/Applications/MacPorts/Emacs.app/Contents/MacOS:$PATH make all"))
+        (:name bbdb
+               :build/darwin ("./configure --with-emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs" "make autoloads" "make"))
+        (:name emacs-w3m
+               :build/darwin ("autoconf" "./configure --with-emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs" "make"))
         twittering-mode
         maxframe
         package
+        gist
         todochiku
         erc-highlight-nicknames
-        (:name rinari
-               :compile ("\.el$"))
         (:name color-theme-hober2
                :type http
                :features color-theme-hober2
