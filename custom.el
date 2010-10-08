@@ -16,7 +16,7 @@
  '(cursor-type (quote box) t)
  '(delete-selection-mode t)
  '(display-time-mode t)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#steamcannon" "#torquebox" "#stormgrind") ("redhat.com" "#emacs" "#oddteam"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#steamcannon" "#torquebox" "#jboss-dev") ("redhat.com" "#projectodd" "#emacs"))))
  '(erc-autojoin-mode t)
  '(erc-hide-list (quote ("KICK" "NICK" "MODE")))
  '(erc-interpret-mirc-color t)

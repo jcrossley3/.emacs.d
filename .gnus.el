@@ -14,6 +14,7 @@
       '(
         ("aquamacs"      "^\\(To\\|Cc\\):.*macosx-emacs")
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
+        ("steamcannon"   "^\\(To\\|Cc\\):.*steamcannon")
         ("android"       "^\\(To\\|Cc\\):.*android")
         ))
 
