@@ -9,7 +9,8 @@
                :build/darwin ("autoconf" "./configure --with-emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs" "make"))
         twittering-mode
         maxframe
-        package
+        (:name package
+               :compile "package.el")
         gist
         todochiku
         erc-highlight-nicknames

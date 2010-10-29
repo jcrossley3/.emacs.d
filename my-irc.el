@@ -59,3 +59,7 @@
 	   (setq erc-keywords '("eudc" "emms" "gnus")))
 	  (nil))))
 (add-hook 'erc-join-hook 'my-channel-keywords)
+
+; (setq erc-pals nil)
+(setq erc-pals (quote ("bobmcw" "mgoldmann" "bbrowning" "tcrawley" "lanceball" "msavy")))
+
