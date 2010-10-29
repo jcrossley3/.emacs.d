@@ -18,7 +18,7 @@
 
 ;;; For maven 2/3 output
 (add-to-list 'compilation-error-regexp-alist
-             '("^\\(.*\\):\\[\\([0-9]*\\),\\([0-9]*\\)\\]" 1 2 3))
+             '("^.*?\\(/.*\\):\\[\\([0-9]*\\),\\([0-9]*\\)\\]" 1 2 3))
 
 ;;; TAGS setup
 (setq tags-table-list '(
