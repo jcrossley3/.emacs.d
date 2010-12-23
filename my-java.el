@@ -24,6 +24,7 @@
 (setq tags-table-list '(
                         "~/src/torquebox"
                         "~/src/jboss-deployers"
+                        "~/src/vfs/tags/3.0.0.CR5"
                         "~/local/java/src"
                         ))
 (setq tags-revert-without-query 't)
