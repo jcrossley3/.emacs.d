@@ -1,6 +1,11 @@
 ;; el-get
 (setq el-get-sources
       '(el-get
+        yaml-mode
+        markdown-mode
+        (:name htmlize
+               :type emacswiki
+               :features htmlize)
         (:name magit
                :build/darwin ("PATH=/Applications/MacPorts/Emacs.app/Contents/MacOS:$PATH make all")
                :features magit)
