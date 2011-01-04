@@ -23,6 +23,7 @@
                :features gist)
         todochiku
         erc-highlight-nicknames
+        color-theme
         (:name color-theme-hober2
                :type http
                :features color-theme-hober2
