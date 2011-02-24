@@ -30,6 +30,7 @@
       (with-current-buffer (get-buffer-create buffer)
         (setq auto-window-vscroll t)
         (setq buffer-read-only t)
+        (rinari-minor-mode)
         (make-local-variable 'after-change-functions)
         (add-hook 'after-change-functions
                   '(lambda (start end len)
