@@ -37,6 +37,7 @@
 (global-set-key (kbd "C-c k") 'browse-kill-ring)
 (global-set-key (kbd "C-c g") 'rgrep)
 (global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key "d" 'dictionary-search)
 ;(global-set-key "\M-g" 'goto-line)
 
 ;;; smarter other-window
@@ -50,4 +51,3 @@
 
 ;;; Ignore case when completing selection input
 (setq completion-ignore-case t)
-

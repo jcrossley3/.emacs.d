@@ -2,6 +2,8 @@
 (setq el-get-sources
       '(el-get
         yaml-mode
+        yari
+        rinari
         markdown-mode
         (:name htmlize
                :type emacswiki
@@ -15,8 +17,6 @@
                :build/darwin ("autoconf" "./configure --with-emacs=/Applications/MacPorts/Emacs.app/Contents/MacOS/Emacs" "make"))
         twittering-mode
         maxframe
-        (:name package
-               :compile "package.el")
         (:name gist
                :type git
                :url "https://github.com/mcfunley/gist.el.git"
