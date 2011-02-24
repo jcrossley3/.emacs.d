@@ -10,6 +10,7 @@
 
 
 (require 'rinari)
+(rinari-bind-key-to-func "l" (quote 'open-log))
 (defun open-log (log-file)
   (interactive
    (list (completing-read "Choose log: "
