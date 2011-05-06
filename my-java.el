@@ -22,10 +22,14 @@
 
 ;;; TAGS setup
 (setq tags-table-list '(
+                        "~/src/arquillian"
                         "~/src/torquebox"
                         "~/src/jboss-deployers"
                         "~/src/vfs/tags/3.0.0.CR5"
+                        "~/src/jruby"
                         "~/local/java/src"
+                        "~/src/cache/ha-server-ispn-1.0.0"
+                        "~/src/infinispan"
                         ))
 (setq tags-revert-without-query 't)
 

@@ -15,10 +15,10 @@
 (defun growl-when-mentioned (match-type nick message)
   "Shows a growl notification, when user's nick was mentioned."
   (unless (posix-string-match "^\\** *Users on #" message)
-    (growl
-     (concat "<" (substring nick 0 (string-match "!" nick)) "> on " (buffer-name (current-buffer)))
-     message
-     )))
+    (let ((who (substring nick 0 (string-match "!" nick)))
+          (where (buffer-name (current-buffer))))
+      (when (eq match-type 'current-nick)
+        (growl (concat "<" who "> on " where) message)))))
 (add-hook 'erc-text-matched-hook 'growl-when-mentioned)
 
 (define-key erc-mode-map (kbd "C-c q")
@@ -37,11 +37,10 @@
   (interactive)
   (if (at-erc-prompt)
       (if (looking-at "ERC>") (end-of-line) (self-insert-command 1))
-	(progn
-	  (condition-case nil
-		  (scroll-up)
-		(error (end-of-buffer)
-               (recenter))))))
+    (condition-case nil
+        (scroll-up)
+      (error (end-of-buffer)
+             (recenter)))))
 (defun my-erc-backspace ()
   (interactive)
   (if (at-erc-prompt)
