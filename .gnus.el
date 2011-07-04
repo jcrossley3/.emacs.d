@@ -16,6 +16,7 @@
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
         ("steamcannon"   "^\\(To\\|Cc\\):.*steamcannon")
         ("android"       "^\\(To\\|Cc\\):.*android")
+        ("jboss"         "^\\(To\\|Cc\\):.*jboss-as7-dev")
         ))
 
 ;;; Primary news server

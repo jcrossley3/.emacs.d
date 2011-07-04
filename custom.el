@@ -17,7 +17,7 @@
  '(delete-selection-mode t)
  '(display-time-mode t)
  '(erc-autoaway-mode t)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#torquebox") ("redhat.com" "#projectodd" "#oddteam" "#emacs"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#jboss-dev" "#jboss-as7" "#torquebox" "#boxgrinder") ("redhat.com" "#oddteam" "#emacs"))))
  '(erc-autojoin-mode t)
  '(erc-away-nickname "jc3-is-away")
  '(erc-hide-list (quote ("KICK" "MODE")))
