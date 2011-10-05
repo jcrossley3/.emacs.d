@@ -16,6 +16,7 @@
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
         ("steamcannon"   "^\\(To\\|Cc\\):.*steamcannon")
         ("android"       "^\\(To\\|Cc\\):.*android")
+        ("jboss"         "^\\(To\\|Cc\\):.*jboss-as7-dev")
         ))
 
 ;;; Primary news server
@@ -31,6 +32,13 @@
         (nnml "local")
         )
       )
+
+;;; Gmail
+(add-to-list 'gnus-secondary-select-methods 
+             '(nnimap "gmail"
+                      (nnimap-address "imap.gmail.com")
+                      (nnimap-server-port 993)
+                      (nnimap-stream ssl)))
 
 ;;; Outbound email
 (setq send-mail-function 'smtpmail-send-it)
@@ -66,9 +74,15 @@
 (setq eudc-inline-expansion-format '("%s <%s>" cn email))
 
 ;;; Posting styles
-;; (setq gnus-posting-styles
-;;       '((".*"
-;;          (name "Jim Crossley"))
-;;         ((header "Subject" "testing")
-;;          (From "Jim Crossley <jim@crossleys.org>"))))
+(setq gnus-posting-styles
+      '((".*"
+         (name "Jim Crossley"))
+        ((header "To" ".*googlegroups.*")
+         (From "Jim Crossley <jcrossley3@gmail.com>"))))
 
+;;; Use one of these as my From address when replying
+(setq message-alternative-emails
+      (regexp-opt '("jim@crossleys.org" "jcrossley3@gmail.com" "jcrossley@redhat.com" "jcrossle@redhat.com")))
+
+;;; Check mail backends automatically
+(gnus-demon-add-scanmail)

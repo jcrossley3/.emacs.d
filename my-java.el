@@ -18,18 +18,26 @@
 
 ;;; For maven 2/3 output
 (add-to-list 'compilation-error-regexp-alist
-             '("^\\(.*\\):\\[\\([0-9]*\\),\\([0-9]*\\)\\]" 1 2 3))
+             '("^.*?\\(/.*\\):\\[\\([0-9]*\\),\\([0-9]*\\)\\]" 1 2 3))
 
 ;;; TAGS setup
 (setq tags-table-list '(
-                        "~/src/torquebox"
-                        "~/src/jboss-deployers"
+                        "~/src/torquebox-as7"
+                        "~/src/jboss-as"
+                        "~/src/jboss-polyglot"
+                        "~/src/fnbox"
                         "~/local/java/src"
                         ))
 (setq tags-revert-without-query 't)
 
 (add-hook 'java-mode-hook 'jtags-mode)
 (autoload 'jtags-mode "jtags")
+
+(add-hook
+ 'java-mode-hook
+ '(lambda () "Treat Java 1.5 @-style annotations as comments."
+    (setq c-comment-start-regexp "(@|/(/|[*][*]?))")
+    (modify-syntax-entry ?@ "< b" java-mode-syntax-table)))
 
 (require 'cl)
 (defun common-prefix (s1 s2)

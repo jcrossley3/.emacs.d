@@ -9,13 +9,20 @@
 (setq custom-file (concat my-config-dir "custom.el"))
 (load custom-file)
 
+;; el-get
+(add-to-list 'load-path (concat my-config-dir "el-get/el-get"))
+;; install it if we lack it
+(unless (require 'el-get nil t)
+  (url-retrieve
+   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
+   (lambda (s)
+     (end-of-buffer)
+     (eval-print-last-sexp))))
+
+(load "my-el-get")
+
 ;; slurp in my various credentials
 (load ".auth")
-
-;; elpa
-(require 'package)
-(package-initialize)
-
 ;; my stuff
 (load "my-env")
 (load "my-twitter")
@@ -23,4 +30,3 @@
 (load "my-java")
 (load "my-irc")
 (load "my-nxml")
-(put 'narrow-to-region 'disabled nil)

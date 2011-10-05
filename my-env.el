@@ -2,7 +2,6 @@
 (tool-bar-mode -1)
 
 ;;; Maximize window
-(require 'maxframe)
 (add-hook 'window-setup-hook 'maximize-frame t)
 
 ;;; Preferred default font height (renders smaller on OSX)
@@ -12,7 +11,6 @@
 (if (require 'color-theme nil t)
     (progn
       (if (fboundp 'color-theme-initialize) (color-theme-initialize))
-      (require 'color-theme-hober2)
       (color-theme-hober2)))
 
 ;; Setup PATH 
@@ -42,6 +40,7 @@
 (global-set-key (kbd "C-c k") 'browse-kill-ring)
 (global-set-key (kbd "C-c g") 'rgrep)
 (global-set-key (kbd "C-c l") 'org-store-link)
+(global-set-key "d" 'dictionary-search)
 ;(global-set-key "\M-g" 'goto-line)
 
 ;;; smarter other-window
@@ -55,6 +54,3 @@
 
 ;;; Ignore case when completing selection input
 (setq completion-ignore-case t)
-
-;;; Really need to use el-get or some such
-(require 'magit)
