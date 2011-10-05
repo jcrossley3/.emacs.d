@@ -3,10 +3,10 @@
 
 (defun connect-redhat ()
   (interactive)
-  (erc :server "irc-2.devel.redhat.com" :port 6667 :nick "jc3" :full-name "Jim Crossley"))
+  (erc :server "irc-2.devel.redhat.com" :port 6667 :nick "jcrossley3" :full-name "Jim Crossley"))
 (defun connect-freenode ()
   (interactive)
-  (erc :server "irc.freenode.net" :port 6667 :nick "jc3" :password my-freenode-password :full-name "Jim Crossley"))
+  (erc :server "irc.freenode.net" :port 6667 :nick "jcrossley3" :password my-freenode-password :full-name "Jim Crossley"))
 (defun connect-all ()
   (interactive)
   (connect-redhat)

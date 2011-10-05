@@ -1,6 +1,9 @@
 ;;; does anyone really use this?
 (tool-bar-mode -1)
 
+;;; Maximize window
+(add-hook 'window-setup-hook 'maximize-frame t)
+
 ;;; Preferred default font height (renders smaller on OSX)
 (set-face-attribute 'default (not 'only-this-frame) :height 150)
 

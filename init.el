@@ -11,23 +11,22 @@
 
 ;; el-get
 (add-to-list 'load-path (concat my-config-dir "el-get/el-get"))
-(if (require 'el-get nil t)
-    (progn
-      (load "my-el-get")
-      (el-get 'sync)
-      ;; slurp in my various credentials
-      (load ".auth")
-      ;; my stuff
-      (load "my-env")
-      (load "my-twitter")
-      (load "my-ruby")
-      (load "my-java")
-      (load "my-irc")
-      (load "my-nxml"))
-  (progn
-    (message "We need to install el-get")
-    (url-retrieve
-     "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
-     (lambda (s)
-       (end-of-buffer)
-       (eval-print-last-sexp)))))
+;; install it if we lack it
+(unless (require 'el-get nil t)
+  (url-retrieve
+   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
+   (lambda (s)
+     (end-of-buffer)
+     (eval-print-last-sexp))))
+
+(load "my-el-get")
+
+;; slurp in my various credentials
+(load ".auth")
+;; my stuff
+(load "my-env")
+(load "my-twitter")
+(load "my-ruby")
+(load "my-java")
+(load "my-irc")
+(load "my-nxml")
