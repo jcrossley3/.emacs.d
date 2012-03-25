@@ -53,9 +53,11 @@
   (make-local-variable 'erc-keywords)
   (let ((buf (buffer-name)))
     (cond ((string-match "^#jboss" buf) 
-	   (setq erc-keywords '("git" "torquebox")))
+	   (setq erc-keywords '("immutant" "torquebox")))
 	  ((string-match "^#emacs" buf) 
 	   (setq erc-keywords '("eudc" "emms" "gnus")))
+	  ((string-match "^#clojure" buf) 
+	   (setq erc-keywords '("immutant" "enterprise")))
 	  (nil))))
 (add-hook 'erc-join-hook 'my-channel-keywords)
 
