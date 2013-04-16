@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: pc
+# key: pc
+# --
+[compojure "1.1.3"]
+[hiccup "1.0.1"]

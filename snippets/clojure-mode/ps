@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ps
+# key: ps
+# --
+[org.clojars.jcrossley3/poorpus "0.1.1"]

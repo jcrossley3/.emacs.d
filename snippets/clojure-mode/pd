@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: pd
+# key: pd
+# --
+[com.datomic/datomic-free "0.8.3551"]
