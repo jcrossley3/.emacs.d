@@ -4,3 +4,4 @@ auto-save-list/
 /.auth.el
 /tramp
 el-get/
+/private.el.gpg
