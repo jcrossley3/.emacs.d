@@ -136,35 +136,6 @@ Assumes message is either of two forms: '* nick does something' or '<nick> says 
             (erc-propertize (concat (erc-default-target) ">") 'read-only t 'rear-nonsticky t 'front-nonsticky t)
           (erc-propertize (concat "ERC>") 'read-only t 'rear-nonsticky t 'front-nonsticky t))))
 
-
-(defun tc/yank-to-gist ()
-  "yank from the top of the kill ring, create a gist from it, and insert the gist url at the point"
-  (interactive)
-  (save-excursion
-    (let ((buffer (current-buffer)))
-            (set-buffer (get-buffer-create "*yank-to-gist*"))
-            (yank)
-            (gist-region
-             (point-min)
-             (point-max)
-             t
-             (lexical-let ((buf buffer))
-               (function (lambda (status)
-                           (let ((location (cadr status)))
-                             (set-buffer buf)
-                             (message "Paste created: %s" location)
-                             (insert location)
-                             (kill-new location))))))
-            (kill-buffer))))
-
-(define-key erc-mode-map (kbd "C-c y") `tc/yank-to-gist)
-
-(defun tc/ido-erc-buffer()
-  (interactive)
-  (tc/ido-for-mode "Channel:" 'erc-mode))
-
-(global-set-key (kbd "C-x c") 'tc/ido-erc-buffer)
-
 ;;; I prefer SPC/DEL to page UP/DOWN
 (setq erc:prompt-regex "^#?\\w+>") 
 (defun erc:at-prompt ()
