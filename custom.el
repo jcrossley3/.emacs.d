@@ -47,7 +47,7 @@
  '(erc-pal-face ((t (:foreground "Magenta"))))
  '(erc-timestamp-face ((t (:foreground "green"))))
  '(fg:erc-color-face12 ((t (:foreground "Cyan"))))
- '(fg:erc-color-face6 ((t (:foreground "Yellow")))))
+ '(fg:erc-color-face6 ((t (:foreground "Yellow"))))
  '(header-line ((t (:inherit mode-line :background "#303030" :foreground "Green" :box nil))))
  '(hl-line ((t (:weight extra-bold))))
  '(hl-line-face ((t nil)) t)
