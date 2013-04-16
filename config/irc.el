@@ -166,14 +166,15 @@ Assumes message is either of two forms: '* nick does something' or '<nick> says 
 (global-set-key (kbd "C-x c") 'tc/ido-erc-buffer)
 
 ;;; I prefer SPC/DEL to page UP/DOWN
+(setq erc:prompt-regex "^#?\\w+>") 
 (defun erc:at-prompt ()
   (save-excursion
     (forward-line 0)
-    (looking-at "^#.+>")))
+    (looking-at erc:prompt-regex)))
 (defun erc:space ()
   (interactive)
   (if (erc:at-prompt)
-      (if (looking-at "^#.+>")
+      (if (looking-at erc:prompt-regex)
           (progn
             (end-of-line)
             (recenter))
