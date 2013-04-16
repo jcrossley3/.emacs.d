@@ -11,6 +11,8 @@
 (setq nnmail-split-methods
       '(
         ("clojure"       "^\\(To\\|Cc\\):.*clojure")
+        ("clojure"       "^\\(To\\|Cc\\):.*datomic")
+        ("clojure"       "^\\(To\\|Cc\\):.*noir")
         ("aquamacs"      "^\\(To\\|Cc\\):.*macosx-emacs")
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
         ("steamcannon"   "^\\(To\\|Cc\\):.*steamcannon")
