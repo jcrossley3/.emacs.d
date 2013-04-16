@@ -1,18 +1,18 @@
 (require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/"))
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
 (package-initialize)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(starter-kit
-                      starter-kit-lisp starter-kit-ruby starter-kit-bindings
-                      clojure-mode clojure-test-mode
+(defvar my-packages '(clojure-mode clojure-test-mode
                       notify gist twittering-mode
                       markdown-mode yaml-mode maxframe
                       jtags jtags-extras auto-complete
-                      erc-hl-nicks ac-slime))
+                      erc-hl-nicks find-things-fast fold-dwim-org
+                      rainbow-delimiters org starter-kit yasnippet))
+
 (dolist (p my-packages)
   (when (not (package-installed-p p))
     (package-install p)))
@@ -32,15 +32,15 @@
 (require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
+;; en/decrypt .gpg files automatically
+(require 'epa-file)
+
 (load "~/.emacs.d/.auth.el")            ;;; slurp in various credentials
 
-(load "~/.emacs.d/config/env.el")
-(load "~/.emacs.d/config/erc.el")
-(load "~/.emacs.d/config/tags.el")
-(load "~/.emacs.d/config/maven.el")
-(load "~/.emacs.d/config/twitter.el")
-(load "~/.emacs.d/config/bindings.el")
+;;; load my config
+(let ((dir (concat user-emacs-directory "config")))
+  (mapc 'load (directory-files dir t "^[^#].*el$")))
 
+;;; something seems to append things here
 
-(put 'ido-exit-minibuffer 'disabled nil)
 (put 'narrow-to-region 'disabled nil)

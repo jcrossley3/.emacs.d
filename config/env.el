@@ -1,3 +1,5 @@
+(require 'cl)
+
 ;; Setup PATH 
 (setenv "PATH" (shell-command-to-string "source ~/.bashrc; echo -n $PATH"))
 ;; Update exec-path with the contents of $PATH

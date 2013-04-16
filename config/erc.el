@@ -1,12 +1,14 @@
 
 (require 'erc)
+(require 'erc-match)
+(require 'erc-track)
 
 (defun connect-redhat ()
   (interactive)
   (erc :server "irc-2.devel.redhat.com" :port 6667 :nick "jcrossley3" :full-name "Jim Crossley"))
 (defun connect-freenode ()
   (interactive)
-  (erc :server "irc.freenode.net" :port 6667 :nick "jcrossley3" :password my-freenode-password :full-name "Jim Crossley"))
+  (erc :server "chat.freenode.net" :port 6667 :nick "jcrossley3" :password my-freenode-password :full-name "Jim Crossley"))
 (defun connect-all ()
   (interactive)
   (connect-redhat)
@@ -30,12 +32,16 @@
 ;;; I prefer SPC/DEL to page UP/DOWN
 (defun erc:at-prompt ()
   (save-excursion
-    (beginning-of-line)
+    (forward-line 0)
     (looking-at "ERC>")))
 (defun erc:space ()
   (interactive)
   (if (erc:at-prompt)
-      (if (looking-at "ERC>") (end-of-line) (self-insert-command 1))
+      (if (looking-at "ERC>")
+          (progn
+            (end-of-line)
+            (recenter))
+        (self-insert-command 1))
     (condition-case nil
         (scroll-up)
       (error (end-of-buffer)
@@ -60,5 +66,14 @@
 	  (nil))))
 (add-hook 'erc-join-hook 'erc:channel-keywords)
 
-(setq erc-pals (quote ("bobmcw" "mgoldmann" "bbrowning" "tcrawley" "lanceball" "msavy")))
+;; Clears out annoying erc-track-mode stuff for when we don't care.
+;; Useful for when ChanServ restarts :P
+(defun erc:reset-track-mode ()
+  (interactive)
+  (setq erc-modified-channels-alist nil)
+  (erc-modified-channels-display)
+  (force-mode-line-update t))
+(global-set-key (kbd "C-c t") 'erc:reset-track-mode)
+
+(setq erc-pals (quote ("bobmcw" "mgoldmann" "bbrowning" "tcrawley" "lanceball" "purplefox" "qmx")))
 
