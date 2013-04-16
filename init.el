@@ -27,9 +27,7 @@
 
 ;;; markdown-mode
 (add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
-
 ;;; yaml-mode
-(require 'yaml-mode)
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
 ;; en/decrypt .gpg files automatically

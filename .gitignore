@@ -5,3 +5,6 @@ auto-save-list/
 /tramp
 el-get/
 /private.el.gpg
+backups/
+/.smex-items
+/places
