@@ -7,7 +7,7 @@
   (package-refresh-contents))
 
 (defvar my-packages '(clojure-mode clojure-test-mode
-                      notify gist twittering-mode
+                      notify gist twittering-mode browse-kill-ring
                       markdown-mode yaml-mode maxframe
                       jtags jtags-extras auto-complete
                       erc-hl-nicks find-things-fast fold-dwim-org
