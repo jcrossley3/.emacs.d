@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: pp
+# key: pp
+# --
+:profiles {:dev  {:immutant {:swank-port 4005}
+                    :datomic-uri "datomic:mem://poorsmatic"}
+             :prod {:immutant {:init poorsmatic.core/start}
+                    :datomic-uri "datomic:free://localhost:4334/poorsmatic"}}

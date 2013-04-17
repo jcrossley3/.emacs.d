@@ -1,32 +1,44 @@
-;; My emacs configuration
+(require 'package)
+(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(package-initialize)
 
-;; make any elisp files in here available on load-path
-(setq my-config-dir (file-name-directory (or (buffer-file-name) load-file-name)))
-(add-to-list 'load-path my-config-dir)
-(add-to-list 'load-path (concat my-config-dir "lib"))
+(when (not package-archive-contents)
+  (package-refresh-contents))
+
+(defvar my-packages '(clojure-mode clojure-test-mode
+                      notify gist twittering-mode browse-kill-ring
+                      markdown-mode yaml-mode maxframe
+                      jtags jtags-extras auto-complete
+                      erc-hl-nicks find-things-fast fold-dwim-org
+                      rainbow-delimiters org starter-kit starter-kit-lisp yasnippet))
+
+(dolist (p my-packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
 
 ;; keep customize settings in their own file
-(setq custom-file (concat my-config-dir "custom.el"))
+(setq custom-file "~/.emacs.d/custom.el")
 (load custom-file)
 
-;; el-get
-(add-to-list 'load-path (concat my-config-dir "el-get/el-get"))
-;; install it if we lack it
-(unless (require 'el-get nil t)
-  (url-retrieve
-   "https://github.com/dimitri/el-get/raw/master/el-get-install.el"
-   (lambda (s)
-     (end-of-buffer)
-     (eval-print-last-sexp))))
+;;; auto-complete
+(require 'auto-complete-config)
+(ac-config-default)
 
-(load "my-el-get")
+;;; markdown-mode
+(add-to-list 'auto-mode-alist '("\\.md$" . markdown-mode))
+;;; yaml-mode
+(add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-;; slurp in my various credentials
-(load ".auth")
-;; my stuff
-(load "my-env")
-(load "my-twitter")
-(load "my-ruby")
-(load "my-java")
-(load "my-irc")
-(load "my-nxml")
+;; load private data - this doesn't go into git
+(load (concat user-emacs-directory "private.el.gpg"))
+
+;;; load my config
+(let ((dir (concat user-emacs-directory "config")))
+  (mapc 'load (directory-files dir t "^[^#].*el$")))
+
+;;; something seems to append things here
+
+;(setq auth-source-debug t)
+(put 'narrow-to-region 'disabled nil)
+

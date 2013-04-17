@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: ex
+# key: ex
+# --
+:exclusions [org.apache.httpcomponents/httpclient]

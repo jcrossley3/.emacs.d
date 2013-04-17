@@ -1,0 +1,35 @@
+# -*- mode: snippet -*-
+# name: core
+# key: core
+# --
+(ns poorsmatic.core
+  (:require [poorsmatic
+             [web :as web]
+             [twitter :as twitter]
+             [scraper :as scraper]]
+            [immutant.messaging :as msg]))
+
+(def urls "/queue/urls")
+(def application (atom nil))
+
+(defn start
+  "Start up everything"
+  []
+  (when-not @application
+    (msg/start urls)
+    (web/start)
+    (reset! application
+            {:scraper
+             (scraper/start urls)
+             :daemon
+             (twitter/daemon #(msg/publish urls %))})))
+
+(defn stop
+  "Cleanly shutdown everything "
+  []
+  (when @application
+    (.stop (:daemon @application))
+    (scraper/stop (:scraper @application))
+    (web/stop)
+    (msg/stop urls)
+    (reset! application nil)))

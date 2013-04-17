@@ -8,11 +8,11 @@
       )
 
 ;;; Splitting rules
-(setq nnimap-split-inbox
-      '("inbox"))
-(setq nnimap-split-rule
+(setq nnmail-split-methods
       '(
         ("clojure"       "^\\(To\\|Cc\\):.*clojure")
+        ("clojure"       "^\\(To\\|Cc\\):.*datomic")
+        ("clojure"       "^\\(To\\|Cc\\):.*noir")
         ("aquamacs"      "^\\(To\\|Cc\\):.*macosx-emacs")
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
         ("steamcannon"   "^\\(To\\|Cc\\):.*steamcannon")
@@ -29,17 +29,18 @@
         (nnimap "redhat"
                 (nnimap-address ,my-imap-server)
                 (nnimap-stream ssl)
-                )
-        (nnml "local")
-        )
-      )
+                (nnimap-inbox "INBOX")
+                (nnimap-split-methods default))
+        (nnml "local")))
 
 ;;; Gmail
 (add-to-list 'gnus-secondary-select-methods 
              '(nnimap "gmail"
                       (nnimap-address "imap.gmail.com")
                       (nnimap-server-port 993)
-                      (nnimap-stream ssl)))
+                      (nnimap-stream ssl)
+                      (nnimap-inbox "INBOX")
+                      (nnimap-split-methods default)))
 
 ;;; Outbound email
 (setq send-mail-function 'smtpmail-send-it)
@@ -61,7 +62,7 @@
 (setq nnmail-expiry-wait 14)
 
 ;;; Prevent gnus from putting this in my custom-file
-(setq canlock-password my-canlock-password)
+(setq canlock-password jc/canlock-password)
 
 ;;; Look up email addresses in LDAP
 (eval-after-load "message"
