@@ -18,8 +18,6 @@
  erc-auto-set-away               t
  erc-autoaway-idle-seconds       7200
  erc-auto-discard-away           nil
- erc-away-nickname               "jcrossley3-away"
- erc-nick                        "jcrossley3"
  erc-nick-uniquifier             "_"
  erc-mode-line-format            "%s %a. %n on %t (%m,%l)"
  erc-join-buffer                 'window-noselect
@@ -40,7 +38,7 @@
                          (cdr (assoc "default" jc/channel-keywords-alist))))
   (make-local-variable 'erc-pals)
   (setq erc-pals (or (cdr (assoc (erc-default-target) jc/channel-pals-alist))
-                         (cdr (assoc "default" jc/channel-pals-alist)))))
+                     (cdr (assoc "default" jc/channel-pals-alist)))))
 (add-hook 'erc-join-hook 'jc/irc-matches)
 
 ;; highlight private queries in the mode line as if my nick is mentioned
@@ -124,10 +122,10 @@
 
 (defun connect-redhat ()
   (interactive)
-  (erc :server "irc-2.devel.redhat.com" :port 6667 :nick "jcrossley3" :full-name "Jim Crossley"))
+  (erc :server "irc-2.devel.redhat.com" :port 6667 :nick erc-nick))
 (defun connect-freenode ()
   (interactive)
-  (erc :server "chat.freenode.net" :port 6667 :nick "jcrossley3" :full-name "Jim Crossley"))
+  (erc :server "chat.freenode.net" :port 6667 :nick erc-nick))
 (defun connect-all ()
   (interactive)
   (connect-redhat)

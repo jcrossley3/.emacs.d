@@ -11,7 +11,7 @@
                       markdown-mode yaml-mode maxframe
                       jtags jtags-extras auto-complete
                       erc-hl-nicks find-things-fast fold-dwim-org
-                      rainbow-delimiters org starter-kit yasnippet))
+                      rainbow-delimiters org starter-kit starter-kit-lisp yasnippet))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
@@ -39,6 +39,6 @@
 
 ;;; something seems to append things here
 
+;(setq auth-source-debug t)
 (put 'narrow-to-region 'disabled nil)
 
-(setq auth-source-debug t)
