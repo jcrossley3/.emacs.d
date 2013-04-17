@@ -1,8 +1,8 @@
 (custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  '(Info-additional-directory-list (quote ("/opt/local/share/info")))
  '(ansi-color-for-comint-mode t)
  '(aquamacs-additional-fontsets nil t)
@@ -17,10 +17,10 @@
  '(delete-selection-mode t)
  '(display-time-mode t)
  '(erc-autoaway-mode t)
- '(erc-autojoin-channels-alist (quote (("freenode.net" "#fnbox" "#clojure" "#jruby" "#jboss-dev" "#jboss-as7" "#torquebox" "#boxgrinder") ("redhat.com" "#projectodd" "#oddteam" "#emacs"))))
+ '(erc-autojoin-channels-alist (quote (("freenode.net" "#infinispan" "#cloudbees" "#immutant" "#clojure" "#jruby" "#jboss-dev" "#jboss-as7" "#torquebox" "#boxgrinder") ("redhat.com" "#projectodd" "#oddteam"))))
  '(erc-autojoin-mode t)
  '(erc-away-nickname "jcrossley3-away")
- '(erc-hide-list (quote ("KICK" "MODE")))
+ '(erc-hide-list (quote ("JOIN" "KICK" "PART" "QUIT" "MODE")))
  '(erc-insert-timestamp-function (quote erc-insert-timestamp-left))
  '(erc-interpret-mirc-color t)
  '(erc-mode-line-format "%s %a. %n on %t (%m,%l)")
@@ -53,8 +53,9 @@
  '(org-babel-load-languages (quote ((emacs-lisp . t) (ruby . t))))
  '(org-hide-leading-stars t)
  '(org-src-fontify-natively t)
+ '(org-table-formula-evaluate-inline nil)
  '(show-paren-mode t)
- '(smtpmail-smtp-server "smtp.corp.redhat.com" t)
+ '(smtpmail-smtp-server "smtp.corp.redhat.com")
  '(split-width-threshold nil)
  '(tab-width 4)
  '(uniquify-buffer-name-style (quote forward) nil (uniquify))
@@ -62,8 +63,8 @@
  '(w3m-fill-column 100)
  '(x-select-enable-clipboard t))
 (custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
  )

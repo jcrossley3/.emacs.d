@@ -22,10 +22,11 @@
 
 ;;; TAGS setup
 (setq tags-table-list '(
-                        "~/src/torquebox-as7"
-                        "~/src/jboss-as"
+                        "~/src/immutant"
+                        "~/src/torquebox"
                         "~/src/jboss-polyglot"
-                        "~/src/fnbox"
+                        "~/src/jboss-as"
+                        "~/src/jboss-msc"
                         "~/local/java/src"
                         ))
 (setq tags-revert-without-query 't)

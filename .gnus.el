@@ -12,6 +12,7 @@
       '("inbox"))
 (setq nnimap-split-rule
       '(
+        ("clojure"       "^\\(To\\|Cc\\):.*clojure")
         ("aquamacs"      "^\\(To\\|Cc\\):.*macosx-emacs")
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
         ("steamcannon"   "^\\(To\\|Cc\\):.*steamcannon")
@@ -25,7 +26,7 @@
 ;;; Secondary (email)
 (setq gnus-secondary-select-methods
       `(
-        (nnimap "remote"
+        (nnimap "redhat"
                 (nnimap-address ,my-imap-server)
                 (nnimap-stream ssl)
                 )
@@ -50,7 +51,7 @@
 (setq gnus-interactive-exit nil)
 
 ;;; Save sent mail
-(setq gnus-message-archive-group "nnimap+remote:Sent")
+(setq gnus-message-archive-group "nnimap+redhat:Sent")
 
 ;;; Only display groups with unread articles
 (setq gnus-list-groups-with-ticked-articles nil)
@@ -86,3 +87,6 @@
 
 ;;; Check mail backends automatically
 (gnus-demon-add-scanmail)
+
+;;; Use adaptive scoring
+(setq gnus-use-adaptive-scoring t)
