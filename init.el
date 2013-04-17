@@ -30,10 +30,8 @@
 ;;; yaml-mode
 (add-to-list 'auto-mode-alist '("\\.yml$" . yaml-mode))
 
-;; en/decrypt .gpg files automatically
-(require 'epa-file)
-
-(load "~/.emacs.d/.auth.el")            ;;; slurp in various credentials
+;; load private data - this doesn't go into git
+(load (concat user-emacs-directory "private.el.gpg"))
 
 ;;; load my config
 (let ((dir (concat user-emacs-directory "config")))
@@ -42,3 +40,5 @@
 ;;; something seems to append things here
 
 (put 'narrow-to-region 'disabled nil)
+
+(setq auth-source-debug t)

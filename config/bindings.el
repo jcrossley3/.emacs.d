@@ -9,6 +9,7 @@
 (global-set-key (kbd "C-c l") 'org-store-link)
 (global-set-key (kbd "C-c d") 'dictionary-search)
 (global-set-key (kbd "C-x f") 'ftf-find-file)
+(global-set-key (kbd "C-c t") 'jc/erc-reset-track-mode)
 
 ;;; previous input
 (defun my-previous-input-behavior ()

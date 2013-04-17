@@ -2,9 +2,6 @@
 (require 'erc-match)
 (require 'erc-hl-nicks)
 
-;; load private data - this doesn't go into git
-(load "~/.emacs.d/private.el.gpg")
-
 (setq
  erc-interpret-mirc-color        t
  erc-nicklist-use-icons          nil
@@ -17,6 +14,7 @@
  erc-keyword-highlight-type      'keyword
  erc-pal-highlight-type          'all
  erc-log-matches-flag            t
+ erc-autojoin-mode               t
  erc-auto-set-away               t
  erc-autoaway-idle-seconds       7200
  erc-auto-discard-away           nil
@@ -35,15 +33,18 @@
 ;; flyspell check as I type
 (erc-spelling-mode 1)
 
+;;; set channel keywords and pals from alists in private.el.gpg
+(defun jc/irc-matches ()
+  (make-local-variable 'erc-keywords)
+  (setq erc-keywords (or (cdr (assoc (erc-default-target) jc/channel-keywords-alist))
+                         (cdr (assoc "default" jc/channel-keywords-alist))))
+  (make-local-variable 'erc-pals)
+  (setq erc-pals (or (cdr (assoc (erc-default-target) jc/channel-pals-alist))
+                         (cdr (assoc "default" jc/channel-pals-alist)))))
 (add-hook 'erc-join-hook 'jc/irc-matches)
 
-(defadvice erc-match-current-nick-p (around tc/erc-match-current-nick-p-sometimes activate)
-  (and msg
-       (not (string-match "\\*\\*\\* \\(Users on #\\|#.*: topic set\\)" msg))
-       ad-do-it))
-
-;; highlight queries in the mode line as if my nick is mentioned
-(defadvice erc-track-find-face (around tc/erc-track-find-face-promote-query activate)
+;; highlight private queries in the mode line as if my nick is mentioned
+(defadvice erc-track-find-face (around jc/erc-track-find-face-promote-query activate)
   (if (erc-query-buffer-p) 
       (setq ad-return-value (intern "erc-current-nick-face"))
     ad-do-it))
@@ -52,7 +53,6 @@
 (defface erc-header-line-disconnected
   '((t (:foreground "black" :background "indianred")))
   "Face to use when ERC has been disconnected.")
-
 (setq erc-header-line-face-method
       (lambda ()
         "Use a different face in the header-line when disconnected."
@@ -60,92 +60,45 @@
           (cond ((erc-server-process-alive) 'erc-header-line)
                 (t 'erc-header-line-disconnected)))))
 
-;; display # of members in mode line
-(define-minor-mode ncm-mode "" nil
-  (:eval
-   (let ((ops 0)
-         (voices 0)
-         (members 0))
-     (maphash (lambda (key value)
-                (when (erc-channel-user-op-p key)
-                  (setq ops (1+ ops)))
-                (when (erc-channel-user-voice-p key)
-                  (setq voices (1+ voices)))
-                (setq members (1+ members)))
-              erc-channel-users)
-     (format " %S" members))))
-
-(add-hook 'erc-mode-hook 'ncm-mode)
-
-(defun tc/irc-growl (channel message)
-  "Displays an irc message to growl/libnotify via todochiku.
-Notice will be sticky if the message is a query."
-  (let ((split-message (tc/irc-split-nick-and-message message)))
-    (if split-message
-        (notify (concat "<" (nth 0 split-message) "> on " channel)
-         (tc/escape-html (nth 1 split-message))))))
-
-(defun tc/irc-split-nick-and-message (msg)
-  "Splits an irc message into nick and the rest of the message.
-Assumes message is either of two forms: '* nick does something' or '<nick> says something'"
-  (if (string-match "^[<\\*] ?\\(.*?\\)>? \\(.*\\)$" msg)
-      (cons (match-string 1 msg)
-            (cons (match-string 2 msg)
-                  ()))
-    ()))
-
-(defun tc/irc-alert-on-message (channel msg)
-  "Plays a sound and growl notifies a message."
-  (and (string-match "^[*<][^*]" msg)
-       (> (length msg) 0)
-       (or (not (string-match "^#" channel)) ;; query
-           (and (not (string-match "^*" msg)) ;; /me
-                (string-match (erc-current-nick) msg)))
-       (progn
-         (tc/play-irc-alert-sound)
-         (tc/irc-growl channel msg))))
-
-(defun tc/irc-alert ()
-  (save-excursion
-    (tc/irc-alert-on-message (buffer-name) (buffer-substring (point-min) (point-max)))))
-
-(add-hook 'erc-insert-post-hook 'tc/irc-alert)
-
-(defun tc/play-irc-alert-sound ()
-  (start-process-shell-command "alert-sound" nil
-                               (if (eq system-type 'darwin)
-                                   "say -v Zarvox -r 500 heyy"
-                                 "mplayer /usr/share/sounds/purple/alert.wav")))
-
-(defun tc/escape-html (str)
-  "Escapes [<>&\n] from a string with html escape codes."
-  (and str
-       (replace-regexp-in-string "<" "&lt;"
-         (replace-regexp-in-string ">" "&gt;"
-           (replace-regexp-in-string "&" "&amp;"
-             (replace-regexp-in-string "\n" "" str))))))
-
+;;; shortcut for querying users
 (define-key erc-mode-map (kbd "C-c q")
   (lambda (nick)
     (interactive (list (completing-read "Query nick: " erc-channel-users)))
     (erc-cmd-QUERY nick)))
 
+;;; construct prompt from the channel name 
 (setq erc-prompt
       (lambda ()
-        (if (and (boundp 'erc-default-recipients) (erc-default-target))
-            (erc-propertize (concat (erc-default-target) ">") 'read-only t 'rear-nonsticky t 'front-nonsticky t)
-          (erc-propertize (concat "ERC>") 'read-only t 'rear-nonsticky t 'front-nonsticky t))))
+        (let ((props '(read-only t rear-nonsticky t front-nonsticky t)))
+          (if (and (boundp 'erc-default-recipients) (erc-default-target))
+              (apply 'erc-propertize (concat (erc-default-target) ">") props)
+            (apply 'erc-propertize "ERC>" props)))))
 
-;;; I prefer SPC/DEL to page UP/DOWN
-(setq erc:prompt-regex "^#?\\w+>") 
-(defun erc:at-prompt ()
+;;; put the number of channel users in the modeline
+(define-minor-mode ncm-mode "Display number of channel members in modeline" nil
+  (:eval
+   (if erc-channel-users (format " %S" (hash-table-count erc-channel-users)))))
+(add-hook 'erc-mode-hook 'ncm-mode)
+
+(defun jc/erc-growl (match-type nick message)
+  "Shows a growl notification, when user's nick was mentioned."
+  (unless (posix-string-match "^\\** *Users on #" message)
+    (let ((who (substring nick 0 (string-match "!" nick)))
+          (where (buffer-name (current-buffer))))
+      (when (eq match-type 'current-nick)
+        (notify (concat "<" who "> on " where) message)))))
+(add-hook 'erc-text-matched-hook 'jc/erc-growl)
+
+;;; prefer SPC/DEL to page UP/DOWN
+(setq jc/erc-prompt-regex "^#?\\w+>") 
+(defun jc/erc-at-prompt ()
   (save-excursion
     (forward-line 0)
-    (looking-at erc:prompt-regex)))
-(defun erc:space ()
+    (looking-at jc/erc-prompt-regex)))
+(defun jc/erc-space ()
   (interactive)
-  (if (erc:at-prompt)
-      (if (looking-at erc:prompt-regex)
+  (if (jc/erc-at-prompt)
+      (if (looking-at jc/erc-prompt-regex)
           (progn
             (end-of-line)
             (recenter))
@@ -154,20 +107,27 @@ Assumes message is either of two forms: '* nick does something' or '<nick> says 
         (scroll-up)
       (error (end-of-buffer)
              (recenter)))))
-(defun erc:backspace ()
+(defun jc/erc-backspace ()
   (interactive)
-  (if (erc:at-prompt)
+  (if (jc/erc-at-prompt)
       (delete-backward-char 1)
     (scroll-down)))
-(define-key erc-mode-map (kbd "SPC") 'erc:space)
-(define-key erc-mode-map (kbd "DEL") 'erc:backspace)
+(define-key erc-mode-map (kbd "SPC") 'jc/erc-space)
+(define-key erc-mode-map (kbd "DEL") 'jc/erc-backspace)
+
+;; Clears out annoying erc-track-mode stuff for when we don't care.
+(defun jc/erc-reset-track-mode ()
+  (interactive)
+  (setq erc-modified-channels-alist nil)
+  (erc-modified-channels-display)
+  (force-mode-line-update t))
 
 (defun connect-redhat ()
   (interactive)
   (erc :server "irc-2.devel.redhat.com" :port 6667 :nick "jcrossley3" :full-name "Jim Crossley"))
 (defun connect-freenode ()
   (interactive)
-  (erc :server "chat.freenode.net" :port 6667 :nick "jcrossley3" :password my-freenode-password :full-name "Jim Crossley"))
+  (erc :server "chat.freenode.net" :port 6667 :nick "jcrossley3" :full-name "Jim Crossley"))
 (defun connect-all ()
   (interactive)
   (connect-redhat)

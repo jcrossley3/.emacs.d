@@ -32,10 +32,6 @@
  '(ns-alternate-modifier (quote super))
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
- '(org-babel-load-languages (quote ((ruby . t) (clojure . t) (emacs-lisp . t))))
- '(org-hide-leading-stars t)
- '(org-src-fontify-natively t)
- '(org-startup-folded nil)
  '(visible-bell t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.

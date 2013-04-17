@@ -62,7 +62,7 @@
 (setq nnmail-expiry-wait 14)
 
 ;;; Prevent gnus from putting this in my custom-file
-(setq canlock-password my-canlock-password)
+(setq canlock-password jc/canlock-password)
 
 ;;; Look up email addresses in LDAP
 (eval-after-load "message"
