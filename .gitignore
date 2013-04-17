@@ -4,3 +4,8 @@ auto-save-list/
 /.auth.el
 /tramp
 el-get/
+backups/
+/places
+/private.el.gpg
+/ac-comphist.dat
+/.smex-items
