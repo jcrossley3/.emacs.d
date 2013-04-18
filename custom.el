@@ -32,14 +32,15 @@
  '(ns-alternate-modifier (quote super))
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
+ '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(visible-bell t))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(erc-current-nick-face ((t (:foreground "Yellow" :weight bold))))
  '(cursor ((t (:background "Orange"))))
+ '(erc-current-nick-face ((t (:foreground "Yellow" :weight bold))))
  '(erc-pal-face ((t (:foreground "Magenta"))))
  '(erc-timestamp-face ((t (:foreground "green"))))
  '(fg:erc-color-face12 ((t (:foreground "Cyan"))))

@@ -8,7 +8,8 @@
  erc-track-exclude-types         '("JOIN" "NICK" "PART" "QUIT" "MODE"
                                    "324" "329" "332" "333" "353" "477")
  erc-track-exclude-server-buffer t
- erc-track-showcount             t  
+ erc-track-showcount             t
+ erc-track-shorten-aggressively  t
  erc-hide-list                   '("MODE" "KICK")
  erc-current-nick-highlight-type 'all
  erc-keyword-highlight-type      'keyword
@@ -19,7 +20,7 @@
  erc-autoaway-idle-seconds       7200
  erc-auto-discard-away           nil
  erc-nick-uniquifier             "_"
- erc-mode-line-format            "%s %a. %n on %t (%m,%l)"
+ erc-mode-line-format            "%S %a"
  erc-join-buffer                 'window-noselect
  erc-track-switch-direction      'importance
  erc-hl-nicks-skip-faces         nil ;'("erc-notice-face" "erc-pal-face" "erc-fool-face")
