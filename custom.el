@@ -29,6 +29,8 @@
  '(kill-whole-line t)
  '(ldap-host-parameters-alist (quote (("ldap.corp.redhat.com"))))
  '(mm-discouraged-alternatives (quote ("text/html" "multipart/mixed")))
+ '(next-error-highlight t)
+ '(next-error-highlight-no-select t)
  '(ns-alternate-modifier (quote super))
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
