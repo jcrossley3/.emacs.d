@@ -89,7 +89,7 @@
 (add-hook 'erc-text-matched-hook 'jc/erc-growl)
 
 ;;; prefer SPC/DEL to page UP/DOWN
-(setq jc/erc-prompt-regex "^#?\\w+>") 
+(setq jc/erc-prompt-regex "^#?[^< ]+>") 
 (defun jc/erc-at-prompt ()
   (save-excursion
     (forward-line 0)
