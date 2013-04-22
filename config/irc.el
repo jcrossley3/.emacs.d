@@ -89,26 +89,17 @@
 (add-hook 'erc-text-matched-hook 'jc/erc-growl)
 
 ;;; prefer SPC/DEL to page UP/DOWN
-(setq jc/erc-prompt-regex "^#?[^< ]+>") 
-(defun jc/erc-at-prompt ()
-  (save-excursion
-    (forward-line 0)
-    (looking-at jc/erc-prompt-regex)))
 (defun jc/erc-space ()
   (interactive)
-  (if (jc/erc-at-prompt)
-      (if (looking-at jc/erc-prompt-regex)
-          (progn
-            (end-of-line)
-            (recenter))
-        (self-insert-command 1))
-    (condition-case nil
-        (scroll-up)
-      (error (end-of-buffer)
-             (recenter)))))
+  (if (<= (point) erc-input-marker)
+      (condition-case nil
+          (scroll-up)
+        (error (end-of-buffer)
+               (recenter)))
+    (insert " ")))
 (defun jc/erc-backspace ()
   (interactive)
-  (if (jc/erc-at-prompt)
+  (if (> (point) erc-input-marker)
       (delete-backward-char 1)
     (scroll-down)))
 (define-key erc-mode-map (kbd "SPC") 'jc/erc-space)
