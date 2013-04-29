@@ -41,18 +41,16 @@
 
 (require 'nrepl)
 
-(defun jc/get-nrepl-port ()
-  (let* ((dir (nrepl-project-directory-for (nrepl-current-dir)))
-         (f (expand-file-name "target/repl-port" dir)))
-    (when (file-exists-p f)
-      (string-to-number
-       (with-temp-buffer
-         (insert-file-contents f)
-         (buffer-string))))))
-
-(defun jc/nrepl ()
+(defun nrepl-port-from-file ()
   (interactive)
-  (let ((port (jc/get-nrepl-port)))
+  (let* ((dir (nrepl-project-directory-for (nrepl-current-dir)))
+         (f (expand-file-name "target/repl-port" dir))
+         (port (when (file-exists-p f)
+                 (string-to-number
+                  (with-temp-buffer
+                    (insert-file-contents f)
+                    (buffer-string))))))
     (if port
         (nrepl-connect "localhost" port)
       (message "No port file found"))))
+

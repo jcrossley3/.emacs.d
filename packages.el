@@ -11,7 +11,8 @@
                       markdown-mode yaml-mode maxframe
                       jtags jtags-extras auto-complete
                       erc-hl-nicks find-things-fast fold-dwim-org
-                      rainbow-delimiters org starter-kit starter-kit-lisp yasnippet))
+                      rainbow-delimiters org yasnippet
+                      starter-kit starter-kit-bindings starter-kit-lisp))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))
