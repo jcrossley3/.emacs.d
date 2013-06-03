@@ -6,7 +6,7 @@
 
 (defun prep-for-preso ()
   (interactive)
-  (set-face-font `default "-apple-inconsolata-medium-r-normal--22-0-72-72-m-0-iso10646-1")
+  ;; (set-face-font `default "-apple-inconsolata-medium-r-normal--22-0-72-72-m-0-iso10646-1")
   (yas-global-mode 1)
   (setq nrepl-popup-stacktraces nil)
   (global-auto-complete-mode -1)
@@ -39,18 +39,4 @@
             (fold-dwim-org/minor-mode)
             (local-set-key (kbd "C-c TAB") 'fold-dwim-org/minor-mode)))
 
-(require 'nrepl)
-
-(defun nrepl-port-from-file ()
-  (interactive)
-  (let* ((dir (nrepl-project-directory-for (nrepl-current-dir)))
-         (f (expand-file-name "target/repl-port" dir))
-         (port (when (file-exists-p f)
-                 (string-to-number
-                  (with-temp-buffer
-                    (insert-file-contents f)
-                    (buffer-string))))))
-    (if port
-        (nrepl-connect "localhost" port)
-      (message "No port file found"))))
-
+(load "~/src/nrepl.el/nrepl.el")

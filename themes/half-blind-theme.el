@@ -1,5 +1,5 @@
 (deftheme half-blind
-  "Created 2013-03-10.")
+  "Created 2013-05-17.")
 
 (custom-theme-set-faces
  'half-blind
@@ -9,7 +9,7 @@
  '(escape-glyph ((t (:foreground "brown"))))
  '(minibuffer-prompt ((t (:background "yellow" :foreground "#020697" :weight bold))))
  '(highlight ((t (:background "gray90"))))
- '(region ((t (:background "#b6b1f1"))))
+ '(region ((t (:background "#b6b1f1" :foreground "black"))))
  '(shadow ((t (:foreground "grey50"))))
  '(secondary-selection ((t (:background "yellow1"))))
  '(trailing-whitespace ((t (:background "red1"))))
