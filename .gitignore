@@ -10,3 +10,6 @@ backups/
 /ac-comphist.dat
 /.smex-items
 /url/cookies
+/session.*
+/var/pcache/gh/gh-gist-api/jcrossley3
+/eshell/history
