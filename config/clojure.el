@@ -8,7 +8,8 @@
   (interactive)
   ;; (set-face-font `default "-apple-inconsolata-medium-r-normal--22-0-72-72-m-0-iso10646-1")
   (yas-global-mode 1)
-  (setq nrepl-popup-stacktraces nil)
+  (setq nrepl-popup-stacktraces nil
+        cider-popup-stacktraces nil)
   (global-auto-complete-mode -1)
   (maximize-frame)
   (shell "*node1*")
@@ -25,9 +26,11 @@
 ;;; put the paredit in the repl
 (add-hook 'slime-repl-mode-hook 'paredit-mode)
 (add-hook 'nrepl-mode-hook 'paredit-mode)
+(add-hook 'cider-repl-mode-hook 'paredit-mode)
 
-;;; nrepl config
+;;; history file
 (setq nrepl-history-file "~/.nrepl-history.eld")
+(setq cider-repl-history-file "~/.nrepl-history.eld")
 
 ;;; datomic schema files
 (add-to-list 'auto-mode-alist '("\\.dtm$" . clojure-mode))
@@ -39,4 +42,6 @@
             (fold-dwim-org/minor-mode)
             (local-set-key (kbd "C-c TAB") 'fold-dwim-org/minor-mode)))
 
-(load "~/src/nrepl.el/nrepl.el")
+;;; Fix clojure-test-mode
+(require 'clojure-test-mode)
+(defalias 'nrepl-emit-interactive-output 'cider-emit-interactive-output)

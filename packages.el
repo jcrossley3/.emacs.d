@@ -1,15 +1,17 @@
 (require 'package)
-(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
-                         ("marmalade" . "http://marmalade-repo.org/packages/")))
+(add-to-list 'package-archives
+  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+(add-to-list 'package-archives
+  '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
 
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(clojure-mode clojure-test-mode
+(defvar my-packages '(dash cider clojure-mode clojure-test-mode
                       notify gist twittering-mode browse-kill-ring
                       markdown-mode yaml-mode maxframe adoc-mode
-                      jtags jtags-extras auto-complete
+                      jtags jtags-extras auto-complete github-browse-file
                       erc-hl-nicks find-things-fast fold-dwim-org
                       rainbow-delimiters org yasnippet
                       starter-kit starter-kit-bindings starter-kit-lisp))

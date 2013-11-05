@@ -28,6 +28,7 @@
  '(jtags-etags-command "find `pwd` | grep -v target | egrep \"\\.(rb|java)$\" | /usr/bin/etags --declarations --members -o %f -")
  '(kill-whole-line t)
  '(ldap-host-parameters-alist (quote (("ldap.corp.redhat.com"))))
+ '(mm-attachment-override-types (quote ("text/x-vcard" "application/pkcs7-mime" "application/x-pkcs7-mime" "application/pkcs7-signature" "application/x-pkcs7-signature" "image/.*")))
  '(mm-discouraged-alternatives (quote ("text/html" "multipart/mixed")))
  '(next-error-highlight t)
  '(next-error-highlight-no-select t)
