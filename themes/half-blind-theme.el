@@ -3,6 +3,7 @@
 
 (custom-theme-set-faces
  'half-blind
+ '(default ((t (:inherit nil :background "white" :foreground "black" :width normal :foundry "unknown" :family "DejaVu Sans Mono" :height 135))))
  '(cursor ((t (:background "#000000"))))
  '(fixed-pitch ((t (:family "Monospace"))))
  '(variable-pitch ((t (:family "Sans Serif"))))
@@ -45,7 +46,6 @@
  '(match ((t (:background "yellow1"))))
  '(next-error ((t (:inherit region))))
  '(query-replace ((t (:inherit isearch))))
- '(hl-line ((t (:background "paleturquoise" :weight extra-bold))))
- '(default ((t (:inherit nil :background "#f8f7f7" :foreground "#000000" :width normal :foundry "apple" :family "Monaco")))))
+ '(hl-line ((t (:background "paleturquoise" :weight extra-bold)))))
 
 (provide-theme 'half-blind)

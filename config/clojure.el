@@ -1,4 +1,4 @@
-(defun run-command (buf command)
+(defun run-shell-command (buf command)
   (with-current-buffer buf
     (goto-char (point-max))
     (insert command)
@@ -7,6 +7,7 @@
 (defun prep-for-preso ()
   (interactive)
   ;; (set-face-font `default "-apple-inconsolata-medium-r-normal--22-0-72-72-m-0-iso10646-1")
+  (set-face-font `default "-unknown-DejaVu Sans Mono-normal-normal-normal-*-20-*-*-*-m-0-iso10646-1")
   (yas-global-mode 1)
   (setq nrepl-popup-stacktraces nil
         cider-popup-stacktraces nil)
@@ -19,9 +20,9 @@
 
 (defun prep-services ()
   (interactive)
-  (run-command "*datomic*" "cd ~/local/datomic; ./bin/transactor config/samples/free-transactor-template.properties")
-  (run-command "*node1*" "IMMUTANT_HOME=/tmp/node1 cluster 100")
-  (run-command "*node2*" "IMMUTANT_HOME=/tmp/node2 cluster 200"))
+  (run-shell-command "*datomic*" "cd ~/local/datomic; ./bin/transactor config/samples/free-transactor-template.properties")
+  (run-shell-command "*node1*" "IMMUTANT_HOME=/tmp/node1 cluster 100")
+  (run-shell-command "*node2*" "IMMUTANT_HOME=/tmp/node2 cluster 200"))
 
 ;;; put the paredit in the repl
 (add-hook 'slime-repl-mode-hook 'paredit-mode)
@@ -45,3 +46,15 @@
 ;;; Fix clojure-test-mode
 (require 'clojure-test-mode)
 (defalias 'nrepl-emit-interactive-output 'cider-emit-interactive-output)
+
+(require 'cider)
+(defun run-cider-command (buf command)
+  (with-current-buffer buf
+    (goto-char (point-max))
+    (insert-char ?\n)
+    (insert command)
+    (cider-repl-return)))
+
+(defun send-expr-to-repl ()
+  (interactive)
+  (run-cider-command "*cider*" (cider-expression-at-point)))

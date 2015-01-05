@@ -15,10 +15,9 @@
         ("clojure"       "^\\(To\\|Cc\\):.*noir")
         ("aquamacs"      "^\\(To\\|Cc\\):.*macosx-emacs")
         ("torquebox"     "^\\(To\\|Cc\\):.*torquebox")
-        ("steamcannon"   "^\\(To\\|Cc\\):.*steamcannon")
+        ("immutant"      "^\\(To\\|Cc\\):.*immutant")
         ("android"       "^\\(To\\|Cc\\):.*android")
-        ("jboss"         "^\\(To\\|Cc\\):.*jboss-as7-dev")
-        ))
+        ("jboss"         "^\\(To\\|Cc\\):.*wildfly-dev")))
 
 ;;; Primary news server
 (setq gnus-select-method `(nntp ,my-news-server))

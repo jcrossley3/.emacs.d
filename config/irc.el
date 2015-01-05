@@ -44,7 +44,7 @@
 
 ;; highlight private queries in the mode line as if my nick is mentioned
 (defadvice erc-track-find-face (around jc/erc-track-find-face-promote-query activate)
-  (if (erc-query-buffer-p) 
+  (if (erc-query-buffer-p)
       (setq ad-return-value (intern "erc-current-nick-face"))
     ad-do-it))
 
@@ -65,7 +65,7 @@
     (interactive (list (completing-read "Query nick: " erc-channel-users)))
     (erc-cmd-QUERY nick)))
 
-;;; construct prompt from the channel name 
+;;; construct prompt from the channel name
 (setq erc-prompt
       (lambda ()
         (let ((props '(read-only t rear-nonsticky t front-nonsticky t)))
@@ -122,3 +122,8 @@
   (interactive)
   (connect-redhat)
   (connect-freenode))
+
+(define-key erc-mode-map (kbd "C-c m")
+  (lambda (nick)
+    (interactive (list (completing-read "Say 'morning!' to nick: " erc-channel-users)))
+    (erc-send-message (format "%s: morning!" nick))))
