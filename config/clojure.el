@@ -43,9 +43,9 @@
             (fold-dwim-org/minor-mode)
             (local-set-key (kbd "C-c TAB") 'fold-dwim-org/minor-mode)))
 
-;;; Fix clojure-test-mode
-(require 'clojure-test-mode)
-(defalias 'nrepl-emit-interactive-output 'cider-emit-interactive-output)
+;; ;;; Fix clojure-test-mode
+;; (require 'clojure-test-mode)
+;; (defalias 'nrepl-emit-interactive-output 'cider-emit-interactive-output)
 
 (require 'cider)
 (defun run-cider-command (buf command)

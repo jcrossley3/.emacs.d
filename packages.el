@@ -8,10 +8,10 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
-(defvar my-packages '(dash cider clojure-mode clojure-test-mode
+(defvar my-packages '(dash cider clojure-mode
                       notify gist twittering-mode browse-kill-ring
                       markdown-mode yaml-mode maxframe adoc-mode
-                      jtags jtags-extras auto-complete github-browse-file
+                      jtags auto-complete github-browse-file
                       erc-hl-nicks find-things-fast fold-dwim-org
                       rainbow-delimiters org yasnippet
                       starter-kit starter-kit-bindings starter-kit-lisp))

@@ -10,7 +10,7 @@
 (ac-config-default)
 
 ;; load private data - this doesn't go into git
-(load "~/src/.emacs.d/private.el.gpg")
+(load "~/.emacs.d/private.el.gpg")
 
 ;;; load my config
 (let ((dir (concat user-emacs-directory "config")))
