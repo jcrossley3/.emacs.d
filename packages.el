@@ -1,6 +1,6 @@
 (require 'package)
-(add-to-list 'package-archives
-  '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;(add-to-list 'package-archives
+;  '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives
   '("marmalade" . "http://marmalade-repo.org/packages/") t)
 (package-initialize)
@@ -9,9 +9,9 @@
   (package-refresh-contents))
 
 (defvar my-packages '(dash cider clojure-mode
-                      notify gist twittering-mode browse-kill-ring
+                      gist twittering-mode browse-kill-ring
                       markdown-mode yaml-mode maxframe adoc-mode
-                      jtags auto-complete github-browse-file
+                      auto-complete github-browse-file
                       erc-hl-nicks find-things-fast fold-dwim-org
                       rainbow-delimiters org yasnippet
                       starter-kit starter-kit-bindings starter-kit-lisp))

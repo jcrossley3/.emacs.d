@@ -1,6 +1,7 @@
 (require 'erc)
 (require 'erc-match)
 (require 'erc-hl-nicks)
+(require 'notifications)
 
 (setq
  erc-interpret-mirc-color        t
@@ -85,7 +86,9 @@
     (let ((who (substring nick 0 (string-match "!" nick)))
           (where (buffer-name (current-buffer))))
       (when (eq match-type 'current-nick)
-        (notify (concat "<" who "> on " where) message)))))
+        (notifications-notify
+         :title (concat "<" who "> on " where)
+         :body message)))))
 (add-hook 'erc-text-matched-hook 'jc/erc-growl)
 
 ;;; prefer SPC/DEL to page UP/DOWN
