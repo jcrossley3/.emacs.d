@@ -43,6 +43,11 @@
             (fold-dwim-org/minor-mode)
             (local-set-key (kbd "C-c TAB") 'fold-dwim-org/minor-mode)))
 
+;;; indenting
+(add-hook 'clojure-mode-hook 
+          (lambda () 
+            (local-set-key (kbd "RET") 'reindent-then-newline-and-indent)))
+
 ;; ;;; Fix clojure-test-mode
 ;; (require 'clojure-test-mode)
 ;; (defalias 'nrepl-emit-interactive-output 'cider-emit-interactive-output)

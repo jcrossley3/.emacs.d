@@ -82,7 +82,7 @@
 
 (defun jc/erc-growl (match-type nick message)
   "Shows a growl notification, when user's nick was mentioned."
-  (unless (posix-string-match "^\\** *Users on #" message)
+  (unless (posix-string-match "^\\*\\*\\* " message)
     (let ((who (substring nick 0 (string-match "!" nick)))
           (where (buffer-name (current-buffer))))
       (when (eq match-type 'current-nick)

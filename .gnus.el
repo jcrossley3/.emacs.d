@@ -57,7 +57,7 @@
 (setq gnus-list-groups-with-ticked-articles nil)
 
 ;;; Delete read messages automatically after 14 days
-(setq gnus-total-expirable-newsgroups ".")
+(setq gnus-total-expirable-newsgroups ".*")
 (setq nnmail-expiry-wait 14)
 
 ;;; Prevent gnus from putting this in my custom-file
