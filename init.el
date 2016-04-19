@@ -16,7 +16,6 @@
 (let ((dir (concat user-emacs-directory "config")))
   (mapc 'load (directory-files dir t "^[^#].*el$")))
 
-;;; something seems to append things here
-
-;(setq auth-source-debug t)
+;;; Initialization without a home
+(smex-initialize)
 (put 'narrow-to-region 'disabled nil)
