@@ -1,7 +1,4 @@
 
-
-(global-set-key (kbd "M-/") 'hippie-expand)
-
 ;; Jump to a definition in the current file. (Protip: this is awesome.)
 (global-set-key (kbd "C-x C-i") 'imenu)
 

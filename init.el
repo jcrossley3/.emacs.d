@@ -17,5 +17,4 @@
   (mapc 'load (directory-files dir t "^[^#].*el$")))
 
 ;;; Initialization without a home
-(smex-initialize)
 (put 'narrow-to-region 'disabled nil)
