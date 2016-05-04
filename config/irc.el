@@ -1,5 +1,6 @@
 (require 'erc)
 (require 'erc-match)
+(require 'erc-join)
 (require 'erc-hl-nicks)
 (require 'notifications)
 
@@ -130,3 +131,12 @@
   (lambda (nick)
     (interactive (list (completing-read "Say 'morning!' to nick: " erc-channel-users)))
     (erc-send-message (format "%s: morning!" nick))))
+
+(defun jc/erc-server-join-channel (f server channel)
+  (let ((srvr (if (and erc-autojoin-domain-only
+                      (string-match "[^.\n]+\\.\\([^.\n]+\\.[^.\n]+\\)$" server))
+                 (match-string 1 server)
+               server)))
+    (funcall f srvr channel)))
+(advice-add 'erc-server-join-channel :around #'jc/erc-server-join-channel)
+
