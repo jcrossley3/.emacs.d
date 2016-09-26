@@ -10,3 +10,9 @@
   ; Godef jump key binding
   (local-set-key (kbd "M-.") 'godef-jump))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
+
+(add-to-list 'load-path(concat (file-name-as-directory (getenv "GOPATH"))
+                               "src/github.com/nsf/gocode/emacs"))
+(require 'go-autocomplete)
+(require 'auto-complete-config)
+(ac-config-default)
