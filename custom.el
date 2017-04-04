@@ -38,6 +38,7 @@
    (quote
     ("SCCS" "RCS" "CVS" "MCVS" ".svn" ".git" ".hg" ".bzr" "_MTN" "_darcs" "{arch}" "target")))
  '(ido-ubiquitous-enable-compatibility nil)
+ '(js-indent-level 2)
  '(jtags-etags-command
    "find `pwd` | grep -v target | egrep \"\\.(rb|java)$\" | /usr/bin/etags --declarations --members -o %f -")
  '(kill-whole-line t)
