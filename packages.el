@@ -16,7 +16,8 @@
                       erc-hl-nicks find-things-fast fold-dwim-org
                       rainbow-delimiters org yasnippet
                       better-defaults paredit idle-highlight-mode
-                      find-file-in-project scpaste))
+                      find-file-in-project scpaste elisp-slime-nav
+                      go-mode go-playground go-rename go-scratch go-tag go-autocomplete))
 
 (dolist (p my-packages)
   (when (not (package-installed-p p))

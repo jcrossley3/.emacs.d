@@ -31,6 +31,11 @@
 ;; (setq browse-url-browser-function 'browse-url-generic
 ;;       browse-url-generic-program "~/src/conkeror/conkeror")
 
+;; Avoid "reference to free variable" warnings
+(defvar ido-cur-item)
+(defvar ido-default-item)
+(defvar ido-cur-list)
+
 ;; ido-mode is like magic pixie dust!
 (ido-mode t)
 (ido-ubiquitous t)

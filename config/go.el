@@ -1,6 +1,9 @@
 (defun my-go-mode-hook ()
   ; Use goimports instead of go-fmt
-  (setq gofmt-command "goimports")
+  (setq
+   gofmt-command "goimports"
+   tab-width 4
+   indent-tabs-mode nil)
   ; Call Gofmt before saving
   (add-hook 'before-save-hook 'gofmt-before-save)
   ; Customize compile command to run go build
@@ -12,7 +15,7 @@
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
 (add-to-list 'load-path(concat (file-name-as-directory (getenv "GOPATH"))
-                               "src/github.com/nsf/gocode/emacs"))
+                               "src/github.com/mdempsky/gocode/emacs"))
 (require 'go-autocomplete)
 (require 'auto-complete-config)
 (ac-config-default)

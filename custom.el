@@ -53,11 +53,15 @@
  '(ns-command-modifier (quote meta))
  '(nxml-slash-auto-complete-flag t)
  '(org-startup-with-inline-images t)
+ '(package-selected-packages
+   (quote
+    (magit-gh-pulls go-guru yagist go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode)))
  '(safe-local-variable-values
    (quote
     ((encoding . utf-8)
      (whitespace-line-column . 80)
      (lexical-binding . t))))
+ '(sh-basic-offset 2)
  '(split-width-threshold nil)
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(visible-bell t))
