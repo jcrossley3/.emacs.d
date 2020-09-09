@@ -121,7 +121,7 @@
   (erc :server "irc-2.devel.redhat.com" :port 6667 :nick erc-nick))
 (defun connect-freenode ()
   (interactive)
-  (erc :server "chat.freenode.net" :port 6667 :nick erc-nick))
+  (erc :server "irc.freenode.net" :port 6667 :nick erc-nick))
 (defun connect-all ()
   (interactive)
   (connect-redhat)
@@ -132,11 +132,11 @@
     (interactive (list (completing-read "Say 'morning!' to nick: " erc-channel-users)))
     (erc-send-message (format "%s: morning!" nick))))
 
-(defun jc/erc-server-join-channel (f server channel)
+(defun jc/erc-server-join-channel (f server channel &optional secret)
   (let ((srvr (if (and erc-autojoin-domain-only
-                      (string-match "[^.\n]+\\.\\([^.\n]+\\.[^.\n]+\\)$" server))
-                 (match-string 1 server)
-               server)))
+                       (string-match "[^.\n]+\\.\\([^.\n]+\\.[^.\n]+\\)$" server))
+                  (match-string 1 server)
+		server)))
     (funcall f srvr channel)))
 (advice-add 'erc-server-join-channel :around #'jc/erc-server-join-channel)
 
