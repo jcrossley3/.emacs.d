@@ -140,3 +140,4 @@
     (funcall f srvr channel)))
 (advice-add 'erc-server-join-channel :around #'jc/erc-server-join-channel)
 
+(add-hook 'erc-mode-hook 'company-mode)

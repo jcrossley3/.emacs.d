@@ -32,6 +32,8 @@
   (which-key-setup-side-window-bottom)
   (setq which-key-idle-delay 0.1))
 
+(use-package adoc-mode)
+
 (use-package diminish
   :defer 5
   :config
@@ -40,8 +42,13 @@
 (use-package magit
   :bind ("C-c m" . magit-status))
 
+(use-package forge)
+
+(use-package vterm)
+
 (use-package counsel
   :after ivy
+  :bind ("C-c j" . counsel-git-grep)
   :config (counsel-mode))
 
 (use-package ivy-hydra)
@@ -87,8 +94,8 @@
 
 (use-package paredit)
 
-(use-package flycheck
-  :hook (prog-mode . flycheck-mode))
+;; (use-package flycheck
+;;   :hook (prog-mode . flycheck-mode))
 
 (use-package rustic
   :config
@@ -99,9 +106,9 @@
 ;;   :diminish cargo-minor-mode
 ;;   :hook (rust-mode . cargo-minor-mode))
 (use-package toml-mode)
-(use-package flycheck-rust
-  :after flycheck
-  :hook (flycheck-mode-hook . flycheck-rust-setup))
+;; (use-package flycheck-rust
+;;   :after flycheck
+;;   :hook (flycheck-mode-hook . flycheck-rust-setup))
 
 (use-package go-mode
   :bind ("C-c c" . compile)
@@ -117,6 +124,7 @@
 (use-package markdown-mode)
 (use-package yaml-mode)
 (use-package gist)
+(use-package git-link)
 (use-package org)
 
 (use-package browse-kill-ring
@@ -134,6 +142,22 @@
 (use-package grep
   :bind ("C-c g" . rgrep))
 
+(use-package comint
+  :ensure nil
+  :bind (:map comint-mode-map
+	      ("M-p" . comint-previous-matching-input-from-input)))
+
+(use-package term
+  :ensure nil
+  :bind (:map term-raw-map
+	      ("M-x" . execute-extended-command))
+  :config
+  (defun my-term-simple-send-with-crlf (proc string)
+    (term-send-string proc string)
+    (term-send-string proc "\r\n"))
+  (add-hook 'term-mode-hook
+	    (lambda ()
+	      (setq-local term-input-sender #'my-term-simple-send-with-crlf))))
 
 ;; TODO: deal with erc betterer
 (use-package erc-hl-nicks)
