@@ -16,3 +16,8 @@ backups/
 /ido.last
 /recentf
 /bookmarks
+/.lsp-session-v1
+/forge-database.sqlite
+/request/
+/transient/
+/url/

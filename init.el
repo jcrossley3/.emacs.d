@@ -44,8 +44,6 @@
 
 (use-package forge)
 
-(use-package vterm)
-
 (use-package counsel
   :after ivy
   :bind ("C-c j" . counsel-git-grep)
@@ -64,51 +62,8 @@
   :config (ivy-mode))
 
 (use-package swiper
-  :after ivy
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
-
-(use-package company
-  :defer 0.5
-  :delight
-  :hook (prog-mode . company-mode)
-  :custom
-  (company-begin-commands '(self-insert-command))
-  (company-idle-delay 0)
-  (company-minimum-prefix-length 1)
-  (company-show-numbers t)
-  (company-tooltip-align-annotations t))
-
-(use-package lsp-mode
-  :commands (lsp lsp-deferred)
-  :hook ((go-mode . lsp-deferred)
-	 (rust-mode . lsp))
-  :config
-  (defun lsp-go-install-save-hooks ()
-    (add-hook 'before-save-hook #'lsp-format-buffer t t)
-    (add-hook 'before-save-hook #'lsp-organize-imports t t))
-  (add-hook 'go-mode-hook #'lsp-go-install-save-hooks))
-(use-package lsp-ui)
-(use-package lsp-ivy)
-(use-package company-lsp)
-
-(use-package paredit)
-
-;; (use-package flycheck
-;;   :hook (prog-mode . flycheck-mode))
-
-(use-package rustic
-  :config
-  (setq rustic-lsp-server 'rust-analyzer)
-  (define-key rustic-mode-map (kbd "TAB") #'company-indent-or-complete-common))
-;; (use-package cargo
-;;   :ensure t
-;;   :diminish cargo-minor-mode
-;;   :hook (rust-mode . cargo-minor-mode))
-(use-package toml-mode)
-;; (use-package flycheck-rust
-;;   :after flycheck
-;;   :hook (flycheck-mode-hook . flycheck-rust-setup))
 
 (use-package go-mode
   :bind ("C-c c" . compile)
@@ -158,6 +113,9 @@
   (add-hook 'term-mode-hook
 	    (lambda ()
 	      (setq-local term-input-sender #'my-term-simple-send-with-crlf))))
+
+;; rust
+(load "~/.emacs.d/config/rust.el")
 
 ;; TODO: deal with erc betterer
 (use-package erc-hl-nicks)
