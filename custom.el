@@ -43,6 +43,8 @@
  '(kill-whole-line t)
  '(ldap-host-parameters-alist '(("ldap.corp.redhat.com")))
  '(lpr-add-switches nil)
+ '(lsp-ui-doc-enable t)
+ '(lsp-ui-sideline-enable nil)
  '(menu-bar-mode nil)
  '(mm-attachment-override-types
    '("text/x-vcard" "application/pkcs7-mime" "application/x-pkcs7-mime" "application/pkcs7-signature" "application/x-pkcs7-signature" "image/.*"))
@@ -54,9 +56,11 @@
  '(nxml-slash-auto-complete-flag t)
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
+   '(projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
  '(racer-cmd "/home/jim/bin/racer")
  '(racer-rust-src-path nil)
+ '(rustic-ansi-faces
+   ["black" "red1" "green3" "yellow3" "lightblue" "magenta3" "cyan3" "white"])
  '(safe-local-variable-values
    '((encoding . utf-8)
      (whitespace-line-column . 80)
@@ -81,4 +85,5 @@
  '(header-line ((t (:inherit mode-line :background "#303030" :foreground "Green" :box nil))))
  '(hl-line ((t (:weight extra-bold))))
  '(hl-line-face ((t nil)) t)
- '(magit-item-highlight ((t (:weight extra-bold)))))
+ '(magit-item-highlight ((t (:weight extra-bold))))
+ '(rustic-errno-face ((t (:foreground "red1")))))

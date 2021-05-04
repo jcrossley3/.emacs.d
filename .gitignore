@@ -21,3 +21,5 @@ backups/
 /request/
 /transient/
 /url/
+/.cask/
+/var/

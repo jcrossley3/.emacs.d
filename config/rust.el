@@ -21,9 +21,9 @@
               ("C-c C-c d" . dap-hydra))
   :config
   ;; uncomment for less flashiness
-  ;; (setq lsp-eldoc-hook nil)
-  ;; (setq lsp-enable-symbol-highlighting nil)
-  ;; (setq lsp-signature-auto-activate nil)
+  (setq lsp-eldoc-hook nil)
+  (setq lsp-enable-symbol-highlighting nil)
+  (setq lsp-signature-auto-activate nil)
 
   ;; comment to disable rustfmt on save
   (setq rustic-format-on-save t)
@@ -59,7 +59,9 @@
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 ;; inline errors
 
-(use-package flycheck :ensure)
+(use-package flycheck :ensure
+  :config
+  (setq flycheck-standard-error-navigation nil))
 
 
 ;; -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-

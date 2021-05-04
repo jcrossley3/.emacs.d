@@ -14,8 +14,18 @@
   (local-set-key (kbd "M-.") 'godef-jump))
 (add-hook 'go-mode-hook 'my-go-mode-hook)
 
-(add-to-list 'load-path(concat (file-name-as-directory (getenv "GOPATH"))
-                               "src/github.com/mdempsky/gocode/emacs"))
-(require 'go-autocomplete)
-(require 'auto-complete-config)
-(ac-config-default)
+;; (add-to-list 'load-path(concat (file-name-as-directory (getenv "GOPATH"))
+;;                                "src/github.com/mdempsky/gocode/emacs"))
+;; (require 'go-autocomplete)
+;; (require 'auto-complete-config)
+;; (ac-config-default)
+
+(require 'lsp-mode)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)

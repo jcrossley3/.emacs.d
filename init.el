@@ -44,26 +44,20 @@
 
 (use-package forge)
 
-(use-package counsel
-  :after ivy
-  :bind ("C-c j" . counsel-git-grep)
-  :config (counsel-mode))
-
-(use-package ivy-hydra)
-
-(use-package ivy
-  :defer 0.1
-  :diminish
-  :bind (("C-c C-r" . ivy-resume)
-         ("C-x B" . ivy-switch-buffer-other-window))
-  :custom
-  (ivy-count-format "(%d/%d) ")
-  (ivy-use-virtual-buffers t)
-  :config (ivy-mode))
-
 (use-package swiper
   :bind (("C-s" . swiper)
          ("C-r" . swiper)))
+
+(use-package selectrum
+  :config
+  (selectrum-mode +1))
+(use-package selectrum-prescient
+  :config
+  (selectrum-prescient-mode +1)
+  (prescient-persist-mode +1))
+(use-package orderless
+  :ensure t
+  :custom (completion-styles '(orderless)))
 
 (use-package go-mode
   :bind ("C-c c" . compile)
@@ -90,6 +84,14 @@
 
 (use-package find-file-in-project
   :bind ("C-x f" . find-file-in-project))
+
+(use-package projectile
+  :ensure t
+  :init
+  (projectile-mode +1)
+  :bind (:map projectile-mode-map
+              ("s-p" . projectile-command-map)
+              ("C-c p" . projectile-command-map)))
 
 (use-package shell
   :bind ("C-x C-m" . shell))
