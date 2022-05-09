@@ -116,6 +116,15 @@
 	    (lambda ()
 	      (setq-local term-input-sender #'my-term-simple-send-with-crlf))))
 
+(use-package ansi-color
+  :config
+  (add-hook 'compilation-filter-hook #'colorize-compilation-buffer))
+
+(defun colorize-compilation-buffer ()
+  (when (derived-mode-p 'compilation-mode)
+    (ansi-color-process-output nil)
+    (setq-local comint-last-output-start (point-marker))))
+
 ;; rust
 (load "~/.emacs.d/config/rust.el")
 

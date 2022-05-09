@@ -122,10 +122,14 @@
 (defun connect-freenode ()
   (interactive)
   (erc :server "irc.freenode.net" :port 6667 :nick erc-nick))
+(defun connect-libera ()
+  (interactive)
+  (erc :server "irc.libera.chat" :port 6667 :nick erc-nick))
 (defun connect-all ()
   (interactive)
   (connect-redhat)
-  (connect-freenode))
+  (connect-freenode)
+  (connect-libera))
 
 (define-key erc-mode-map (kbd "C-c m")
   (lambda (nick)
@@ -141,3 +145,6 @@
 (advice-add 'erc-server-join-channel :around #'jc/erc-server-join-channel)
 
 (add-hook 'erc-mode-hook 'company-mode)
+
+
+(advice-remove 'erc-server-join-channel #'jc/erc-server-join-channel)

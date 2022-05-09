@@ -20,7 +20,7 @@
  '(clojure-indent-style t)
  '(comint-scroll-show-maximum-output nil)
  '(compilation-scroll-output t)
- '(compilation-skip-threshold 2)
+ '(compilation-skip-threshold 1)
  '(cursor-color "#52676f")
  '(custom-enabled-themes '(cyberpunk))
  '(custom-safe-themes
@@ -43,7 +43,7 @@
  '(kill-whole-line t)
  '(ldap-host-parameters-alist '(("ldap.corp.redhat.com")))
  '(lpr-add-switches nil)
- '(lsp-ui-doc-enable t)
+ '(lsp-rust-all-features t)
  '(lsp-ui-sideline-enable nil)
  '(menu-bar-mode nil)
  '(mm-attachment-override-types
@@ -56,11 +56,12 @@
  '(nxml-slash-auto-complete-flag t)
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
+   '(dockerfile-mode projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
  '(racer-cmd "/home/jim/bin/racer")
  '(racer-rust-src-path nil)
  '(rustic-ansi-faces
    ["black" "red1" "green3" "yellow3" "lightblue" "magenta3" "cyan3" "white"])
+ '(rustic-rustfmt-config-alist '((edition . "2018")))
  '(safe-local-variable-values
    '((encoding . utf-8)
      (whitespace-line-column . 80)
@@ -68,6 +69,8 @@
  '(sh-basic-offset 2)
  '(split-width-threshold nil)
  '(tool-bar-mode nil)
+ '(tramp-remote-path
+   '(tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin" "/home/jcrossley/.cargo/bin"))
  '(uniquify-buffer-name-style 'post-forward-angle-brackets nil (uniquify))
  '(user-mail-address "jim@crossleys.org")
  '(visible-bell t))
