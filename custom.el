@@ -20,7 +20,7 @@
  '(clojure-indent-style t)
  '(comint-scroll-show-maximum-output nil)
  '(compilation-scroll-output t)
- '(compilation-skip-threshold 1)
+ '(compilation-skip-threshold 2)
  '(cursor-color "#52676f")
  '(custom-enabled-themes '(cyberpunk))
  '(custom-safe-themes
@@ -61,6 +61,7 @@
  '(racer-rust-src-path nil)
  '(rustic-ansi-faces
    ["black" "red1" "green3" "yellow3" "lightblue" "magenta3" "cyan3" "white"])
+ '(rustic-default-test-arguments "--benches --tests")
  '(rustic-rustfmt-config-alist '((edition . "2018")))
  '(safe-local-variable-values
    '((encoding . utf-8)
