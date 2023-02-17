@@ -68,12 +68,13 @@
     (erc-cmd-QUERY nick)))
 
 ;;; construct prompt from the channel name
-(setq erc-prompt
-      (lambda ()
-        (let ((props '(read-only t rear-nonsticky t front-nonsticky t)))
-          (if (and (boundp 'erc-default-recipients) (erc-default-target))
-              (apply 'erc-propertize (concat (erc-default-target) ">") props)
-            (apply 'erc-propertize "ERC>" props)))))
+;; (setq erc-prompt
+;;       (lambda ()
+;;         (let ((props '(read-only t rear-nonsticky t front-nonsticky t)))
+;;           (if (and (boundp 'erc-default-recipients) (erc-default-target))
+;;               (apply 'erc-propertize (concat (erc-default-target) ">") props)
+;;             (apply 'erc-propertize "ERC>" props)))))
+(setq erc-prompt (lambda () (concat "[" (buffer-name) "]")))
 
 ;;; put the number of channel users in the modeline
 (define-minor-mode ncm-mode "Display number of channel members in modeline" nil

@@ -28,7 +28,21 @@
 
   ;; comment to disable rustfmt on save
   (setq rustic-format-on-save t)
-  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook))
+  (add-hook 'rustic-mode-hook 'rk/rustic-mode-hook)
+
+  (add-to-list 'compilation-error-regexp-alist-alist
+               (cons 'rustic-error rustic-compilation-error))
+  (add-to-list 'compilation-error-regexp-alist-alist
+               (cons 'rustic-warning rustic-compilation-warning))
+  (add-to-list 'compilation-error-regexp-alist-alist
+               (cons 'rustic-info rustic-compilation-info))
+  (add-to-list 'compilation-error-regexp-alist-alist
+               (cons 'rustic-panic rustic-compilation-panic))
+
+  (add-to-list 'compilation-error-regexp-alist 'rustic-error)
+  (add-to-list 'compilation-error-regexp-alist 'rustic-warning)
+  (add-to-list 'compilation-error-regexp-alist 'rustic-info)
+  (add-to-list 'compilation-error-regexp-alist 'rustic-panic))
 
 (defun rk/rustic-mode-hook ()
   ;; so that run C-c C-c C-r works without having to confirm, but don't try to
