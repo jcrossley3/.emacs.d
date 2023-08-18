@@ -43,7 +43,7 @@
  '(kill-whole-line t)
  '(ldap-host-parameters-alist '(("ldap.corp.redhat.com")))
  '(lpr-add-switches nil)
- '(lsp-rust-all-features t)
+ '(lsp-rust-all-features nil)
  '(lsp-ui-sideline-enable nil)
  '(menu-bar-mode nil)
  '(mm-attachment-override-types
@@ -56,7 +56,7 @@
  '(nxml-slash-auto-complete-flag t)
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(dockerfile-mode projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
+   '(sqlite3 dockerfile-mode projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
  '(racer-cmd "/home/jim/bin/racer")
  '(racer-rust-src-path nil)
  '(rustic-ansi-faces
