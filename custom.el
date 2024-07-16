@@ -56,7 +56,7 @@
  '(nxml-slash-auto-complete-flag t)
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(sqlite3 dockerfile-mode projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
+   '(igist sqlite3 dockerfile-mode projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
  '(racer-cmd "/home/jim/bin/racer")
  '(racer-rust-src-path nil)
  '(rustic-ansi-faces
@@ -74,7 +74,8 @@
    '(tramp-default-remote-path "/bin" "/usr/bin" "/sbin" "/usr/sbin" "/usr/local/bin" "/usr/local/sbin" "/local/bin" "/local/freeware/bin" "/local/gnu/bin" "/usr/freeware/bin" "/usr/pkg/bin" "/usr/contrib/bin" "/opt/bin" "/opt/sbin" "/opt/local/bin" "/home/jcrossley/.cargo/bin"))
  '(uniquify-buffer-name-style 'post-forward-angle-brackets nil (uniquify))
  '(user-mail-address "jim@crossleys.org")
- '(visible-bell t))
+ '(visible-bell t)
+ '(warning-suppress-types '((comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
