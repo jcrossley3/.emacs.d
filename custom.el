@@ -55,15 +55,16 @@
  '(ns-alternate-modifier 'super)
  '(ns-command-modifier 'meta)
  '(nxml-slash-auto-complete-flag t)
+ '(org-startup-indented t)
  '(org-startup-with-inline-images t)
  '(package-selected-packages
-   '(igist sqlite3 dockerfile-mode projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
+   '(w3m igist sqlite3 dockerfile-mode projectile dap-mode exec-path-from-shell orderless selectrum-prescient selectrum swiper flycheck-rust toml-mode rgrep company-lsp ivy-youtube ivy-hydra ivy-rich counsel lsp-ivy lsp-ui diminish ivy flycheck which-key lsp-mode company cargo rustic rust-mode rust-playground gist forge go-guru go-autocomplete go-mode go-playground go-rename go-scratch go-tag yasnippet yaml-mode smex scpaste rainbow-delimiters paredit maxframe markdown-mode magit ido-ubiquitous idle-highlight-mode git-link fold-dwim-org find-things-fast find-file-in-repository find-file-in-project erc-hl-nicks elisp-slime-nav cider browse-kill-ring better-defaults auto-complete adoc-mode))
  '(racer-cmd "/home/jim/bin/racer")
  '(racer-rust-src-path nil)
  '(rustic-ansi-faces
    ["black" "red1" "green3" "yellow3" "lightblue" "magenta3" "cyan3" "white"])
+ '(rustic-cargo-use-last-stored-arguments t)
  '(rustic-default-test-arguments "--benches --tests")
- '(rustic-rustfmt-config-alist '((edition . "2018")))
  '(safe-local-variable-values
    '((encoding . utf-8)
      (whitespace-line-column . 80)
